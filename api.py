@@ -8,17 +8,15 @@ import re
 opendict_cert_key = 'FCDE6983D27255C93578050A57CEDFF1'
 
 def search_for_words_in_excel():
-    excel = pd.read_excel('D:\신희승\IIRTECH\IIRTECH\한국어 학습용 어휘 목록.xls', usecols="B")
+    excel = pd.read_excel('D:\신희승\IIRTECH\IIRTECH\한국어 학습용 어휘 목록.xls', usecols=["단어","등급"])
     words = []
     for value in excel.values:
-        value = str(value)
-        word = value[2:len(value)-2]  # 대괄호, '' 제거
-
-        numbers = re.findall('\d', word)
-        word = word.replace("".join(numbers), "")
-        words.append(word)
-
-    return words
+        if value[1] == "A":
+            word = value[0]  # 대괄호, '' 제거
+            numbers = re.findall('\d', word)
+            word = word.replace("".join(numbers), "")
+            words.append(word)
+    return list(set(words))
 
 def search_for_words_in_opendict(words):
     # 마지막이 search면 사전 검색 오픈 API, view면 사전 내용 오픈 API입니다.
@@ -50,6 +48,8 @@ def search_for_words_in_opendict(words):
 
             if rescode == 200:
                 text = response.read().decode('utf-8')
+                if len(text) == 1:   # 페이지 없는 경우 예외처리
+                    break
                 jsonObject = json.loads(text)
                 if 'item' not in jsonObject['channel']:
                     print("***********************************")
@@ -121,7 +121,7 @@ def search_for_words_in_opendict(words):
                 if 'translation_info' in jsonSense:
                     translation = ''
                     for j in range(len(jsonSense['translation_info'])):
-                        translation = translation + jsonSense['translation_info'][j]['word'] + ', '
+                        translation = translation + jsonSense['translation_info'][j]['translation'] + ', '
                     ws[columns_a[22] + str(i)] = translation[0:len(translation) - 2]  # 대역어
 
                 if 'region_info' in jsonSense:  # *****************************
