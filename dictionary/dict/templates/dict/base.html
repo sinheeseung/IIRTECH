@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <h1 >Search</h1>
+    </header>
+    <form class="form-inline" action="{% url 'dict:search' %}" method="get">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="kw">
+        <button class="btn btn-outline-success my5 my-sm-0" type="submit"> Search</button>
+    </form>
+    <div class = 'container'>
+        {% block content %}
+        {% endblock %}
+        </div>
+</body>
+</html>

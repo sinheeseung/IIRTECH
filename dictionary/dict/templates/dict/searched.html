@@ -1,0 +1,24 @@
+{% extends 'dict//base.html' %}
+
+{% block content %}
+<body>
+
+<div class = 'container'>
+    {% if context %}
+        {% for word in context%}
+            <div class = 'container' style = 'display: flex; margin = 5'>
+                <h1 style = 'margin-right: 10px'>{{ word.word }}</h1>
+                <div class = 'container'>
+                    <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no }}</h5>
+                    <h3 style = 'margin: 0'>{{ word.pronunciation}}</h3>
+                </div>
+            </div>
+            <h2 style = 'margin: 0'>{{ word.definition}}</h2>
+        {% endfor %}
+    {% elif search_term %}<!-- 검색란이 공란인지 확인-->
+        <b><i> Not Found</i></b>
+{% endif %}
+</div>
+
+</body>
+{% endblock %}
