@@ -7,7 +7,12 @@
 </head>
 <body>
     <header>
-        <h1 >Search</h1>
+         <body link = "0000ff" vlink="0000ff">
+            <a href = "{% url 'dict:main' %}">
+                <h1 >Search</h1>
+            </a>
+        </body>
+
     </header>
     <form class="form-inline" action="{% url 'dict:search' %}" method="get">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" name="kw">
