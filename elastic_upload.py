@@ -1,7 +1,7 @@
 '''
 cloud-id : HeeSeung:YXNpYS1ub3J0aGVhc3QzLmdjcC5lbGFzdGljLWNsb3VkLmNvbSQ4OGFlNzM5MGQ4MmM0YjA0YjMzYjM4NDk0MDBhNTRlNSRlNWZkMTRkZDk5OWE0ZDU2OTU5YjZjNWIyMTgzZDIxMg==
 username  elastic
-password  OxE4JM1b8CJjkQvs3dEqPOUC
+password  BtRlZps4UDAmmBJcOTYnrxz5
 '''
 
 from elastic_app_search import Client
@@ -10,12 +10,12 @@ import json
 client = Client(
     # elastic app search engine의 Credentials
     # https://를 제외한 Endpoint + /api/as/v1
-    base_endpoint='heeseung-edb12d.ent.ap-northeast-2.aws.elastic-cloud.com/api/as/v1',
+    base_endpoint='my-deployment-a1ad04.ent.us-central1.gcp.cloud.es.io/api/as/v1',
     # elastic app search engine의 private-key
-    api_key='private-y5d2ucj6oxz85nq1dwvrzbmc',
+    api_key='private-1x2hnqva8fdxj5msc6eqkhp4',
     use_https=True
 )
-engine_name = 'korean-dictionary'
+engine_name = 'dictionary'
 document = 'C:\\Users\\82105\\Desktop\\신희승\\IIRTECH\\IIRTECH\\data.json'
 with open(document, 'r', encoding='utf-8-sig') as fp:
     json_data = json.load(fp)
