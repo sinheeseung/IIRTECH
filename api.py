@@ -128,6 +128,7 @@ def search_for_words_in_opendict(words):
 
                 if 'region_info' in json_sense:  # *****************************
                     ws[columns_a[23] + str(i)] = str(json_sense['region_info'])  # 문법
+                ws[columns_a[24] + str(i)] = json_item['target_code']
                 i += 1
                 index += 1
             else:
@@ -140,7 +141,7 @@ ws = wb.create_sheet('data')
 
 i = 0
 columns = ['표제어', '의미번호', '뜻', '구성단위', '고유어 여부', '원어', '언어', '발음', '활용', '활용의 발음', '준말', '준말의 발음', '어원', '이형태', '품사',
-           '범주', '문법', '전문분야', '용례', '용례의 출처', '용례의 원문', '관련어휘', '대역어', '방언지역']
+           '범주', '문법', '전문분야', '용례', '용례의 출처', '용례의 원문', '관련어휘', '대역어', '방언지역', 'pk']
 
 columns_a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
              'V', 'W', 'X', 'Y', 'Z']
@@ -152,4 +153,4 @@ for column in columns:
 words = search_for_words_in_excel()
 search_for_words_in_opendict(words)
 
-wb.save(r'D:\신희승\IIRTECH\IIRTECH\data.xlsx')
+wb.save("C:\\Users\\82105\\Desktop\\신희승\\IIRTECH\\IIRTECH\\data.xlsx")
