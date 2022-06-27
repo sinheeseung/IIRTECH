@@ -9,4 +9,5 @@ urlpatterns = [
     #path('', views.index, name='index'),
     path('', views.main, name='main'),
     path('searched/', views.search, name='search'),
+    path('item/<int:pk>/', views.index, name='item'),
 ]
