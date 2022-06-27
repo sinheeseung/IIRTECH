@@ -7,12 +7,17 @@
     {% if context %}
         {% for word in context%}
             <div class = 'container' style = 'display: flex; margin = 5'>
+                <body link = "0000ff" vlink="0000ff">
                     <a href = "{% url 'dict:item' word.pk.raw %}">
                         <h1 style = 'margin-right: 10px'>{{ word.word.raw }}</h1>
                     </a>
+                </body>
+
                 <div class = 'container'>
                     <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no.raw }}</h5>
-                    <h3 style = 'margin: 0'>{{ word.pronunciation.raw}}</h3>
+                    {% if word.pronunciation.raw != "None" %}
+                        <h3 style = 'margin: 0'>{{ word.pronunciation.raw}}</h3>
+                    {% endif %}
                 </div>
             </div>
             <h2 style = 'margin: 0'>{{ word.definition.raw}}</h2>
