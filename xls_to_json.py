@@ -19,8 +19,8 @@ col_max = sheet.max_column
 row_max = sheet.max_row
 key_list = ['word', 'sense_no', 'definition', 'word_unit', 'word_type', 'original_language', 'language_type',
             'pronunciation', 'conjugation', 'conjugation_pro', 'abbreviation', 'abbreviation_pro', 'origin',
-            'allomorph', 'pos',
-            'type', 'grammar', 'cat', 'example', 'source', 'origin', 'relation_word', 'translation', 'region', 'pk']
+            'allomorph', 'pos', 'type', 'grammar', 'cat', 'example', 'relation_word', 'relation_type',
+            'translation', 'translation_language', 'region', 'proverb', 'pro_defi', 'pro_type', 'pk']
 for i in range(1, col_max + 1):
     key_list.append(sheet.cell(row=1, column=i).value)
 

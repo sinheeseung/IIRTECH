@@ -83,8 +83,8 @@ def search_for_words_in_opendict(words):
                         json_original = json_word['original_language_info'][j]
                         original_language = original_language + json_original['original_language'] + ', '  # 원어
                         language_type = language_type + json_original['language_type'] + ', '
-                    ws[columns_a[5] + str(i)] = original_language[0:len(original_language)-2]  # 원어
-                    ws[columns_a[6] + str(i)] = language_type[0:len(language_type)-2]  # 언어
+                    ws[columns_a[5] + str(i)] = original_language[0:len(original_language) - 2]  # 원어
+                    ws[columns_a[6] + str(i)] = language_type[0:len(language_type) - 2]  # 언어
 
                 if 'conju_info' in json_word:
                     conjugation = ''
@@ -122,34 +122,45 @@ def search_for_words_in_opendict(words):
 
                 if 'example_info' in json_sense:
                     example = ''
-                    source = ''
-                    origin = ''
                     for j in range(len(json_sense['example_info'])):
                         json_exam = json_sense['example_info'][j]
                         example = example + json_exam['example'] + ', '
-                        if 'source' in json_exam:
-                            source = source + json_exam['source'] + ', '
-                        if 'origin' in json_exam:
-                            origin = origin + json_exam['origin'] + ', '
                     ws[columns_a[18] + str(i)] = example[0:len(example) - 2]  # 용례
-                    ws[columns_a[19] + str(i)] = source[0:len(source) - 2]  # 용례의 출처
-                    ws[columns_a[20] + str(i)] = origin[0:len(origin) - 2]  # 용례의 원문
 
                 if 'relation_info' in json_sense:
                     relation = ''
+                    relation_type = ''
                     for j in range(len(json_sense['relation_info'])):
                         relation = relation + json_sense['relation_info'][j]['word'] + ', '
-                    ws[columns_a[21] + str(i)] = relation[0:len(relation) - 2]  # 관련 어휘
+                        relation_type = relation_type + json_sense['relation_info'][j]['type'] + ', '
+                    ws[columns_a[19] + str(i)] = relation[0:len(relation) - 2]  # 관련 어휘
+                    ws[columns_a[20] + str(i)] = relation_type[0:len(relation_type) - 2]  # 관련 어휘 유형
 
                 if 'translation_info' in json_sense:
                     translation = ''
+                    translation_type = ''
                     for j in range(len(json_sense['translation_info'])):
                         translation = translation + json_sense['translation_info'][j]['translation'] + ', '
-                    ws[columns_a[22] + str(i)] = translation[0:len(translation) - 2]  # 대역어
+                        translation_type = translation_type + json_sense['translation_info'][j]['language_type'] + ', '
+                    ws[columns_a[21] + str(i)] = translation[0:len(translation) - 2]  # 대역어
+                    ws[columns_a[22] + str(i)] = translation_type[0:len(translation_type) - 2]  # 대역어 언어
 
                 if 'region_info' in json_sense:  # *****************************
-                    ws[columns_a[23] + str(i)] = str(json_sense['region_info'])  # 문법
-                ws[columns_a[24] + str(i)] = json_item['target_code']
+                    ws[columns_a[23] + str(i)] = str(json_sense['region_info'])  # 방언지역
+
+                if 'proverb_info' in json_word:
+                    proverb = ''
+                    proverb_defi = ''
+                    proverb_type = ''
+                    for j in range(len(json_word['proverb_info'])):
+                        proverb = proverb + json_word['proverb_info'][j]['word']
+                        proverb_defi = proverb_defi + json_word['proverb_info'][j]['definition']
+                        proverb_type = proverb_type + json_word['proverb_info'][j]['type']
+                    ws[columns_a[24] + str(i)] = proverb[0:len(proverb) - 2]              # 속담, 관용구
+                    ws[columns_a[25] + str(i)] = proverb_defi[0:len(proverb_defi) - 2]  # 뜻풀이
+                    ws[columns_a[26] + str(i)] = proverb_type[0:len(proverb_type) - 2]  # 유형
+
+                ws[columns_a[27] + str(i)] = json_item['target_code']
                 i += 1
                 index += 1
             else:
@@ -162,10 +173,10 @@ ws = wb.create_sheet('data')
 
 i = 0
 columns = ['표제어', '의미번호', '뜻', '구성단위', '고유어 여부', '원어', '언어', '발음', '활용', '활용의 발음', '준말', '준말의 발음', '어원', '이형태', '품사',
-           '범주', '문법', '전문분야', '용례', '용례의 출처', '용례의 원문', '관련어휘', '대역어', '방언지역', 'pk']
+           '범주', '문법', '전문분야', '용례', '관련어휘', '관련어휘 유형', '대역어', '대역어 언어', '방언지역','속담/관용구', '뜻풀이', '유형', 'pk']
 
 columns_a = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'N', 'M', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
-             'V', 'W', 'X', 'Y', 'Z']
+             'V', 'W', 'X', 'Y', 'Z', 'AA', 'AB']
 
 for column in columns:
     ws[columns_a[i] + '1'] = column
