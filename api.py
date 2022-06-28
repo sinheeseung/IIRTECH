@@ -77,22 +77,36 @@ def search_for_words_in_opendict(words):
                 ws[columns_a[1] + str(i)] = json_sense['sense_no']  # 의미번호
 
                 if 'original_language_info' in json_word:
-                    json_original = json_word['original_language_info'][0]
-                    ws[columns_a[5] + str(i)] = json_original['original_language']  # 원어
-                    ws[columns_a[6] + str(i)] = json_original['language_type']  # 언어
+                    original_language = ''
+                    language_type = ''
+                    for j in range(len(json_word['original_language_info'])):
+                        json_original = json_word['original_language_info'][j]
+                        original_language = original_language + json_original['original_language'] + ', '  # 원어
+                        language_type = language_type + json_original['language_type'] + ', '
+                    ws[columns_a[5] + str(i)] = original_language[0:len(original_language)-2]  # 원어
+                    ws[columns_a[6] + str(i)] = language_type[0:len(language_type)-2]  # 언어
 
                 if 'conju_info' in json_word:
-                    json_conju = json_word['conju_info'][0]
-                    if 'conjugation_info' in json_conju:
-                        json_conjugation = json_conju['conjugation_info']
-                        ws[columns_a[8] + str(i)] = json_conjugation['conjugation']  # 활용
-                        if 'pronunciation_info' in json_conjugation:
-                            ws[columns_a[9] + str(i)] = str(json_conjugation['pronunciation_info'])  # 활용의 발음
-                    if 'abbreviation_info' in json_conju:
-                        json_abbre = json_conju['abbreviation_info']
-                        ws[columns_a[10] + str(i)] = json_abbre['abbreviation']  # 준말
-                        if 'pronunciation_info' in json_abbre:
-                            ws[columns_a[11] + str(i)] = str(json_abbre['pronunciation_info'])  # 준말의 발음
+                    conjugation = ''
+                    conjugation_pro = ''
+                    abbreviation = ''
+                    abbreviation_pro = ''
+                    for j in range(len(json_word['conju_info'])):
+                        json_conju = json_word['conju_info'][j]
+                        if 'conjugation_info' in json_conju:
+                            json_conjugation = json_conju['conjugation_info']
+                            conjugation = conjugation + json_conjugation['conjugation'] + ", "
+                            if 'pronunciation_info' in json_conjugation:
+                                conjugation_pro = conjugation_pro + str(json_conjugation['pronunciation_info']) + ", "
+                        if 'abbreviation_info' in json_conju:
+                            json_abbre = json_conju['abbreviation_info']
+                            abbreviation = abbreviation + json_abbre['abbreviation'] + ', '
+                            if 'pronunciation_info' in json_abbre:
+                                abbreviation_pro = abbreviation_pro + str(json_abbre['pronunciation_info']) + ', '
+                    ws[columns_a[8] + str(i)] = conjugation[0:len(conjugation) - 2]  # 활용
+                    ws[columns_a[9] + str(i)] = conjugation_pro[0:len(conjugation_pro) - 2]  # 활용의 발음
+                    ws[columns_a[10] + str(i)] = abbreviation[0:len(abbreviation) - 2]  # 준말
+                    ws[columns_a[11] + str(i)] = abbreviation_pro[0:len(abbreviation_pro) - 2]  # 준말의 발음
 
                 if 'origin' in json_word:
                     ws[columns_a[12] + str(i)] = json_word['origin']  # 어원
@@ -107,12 +121,19 @@ def search_for_words_in_opendict(words):
                     ws[columns_a[16] + str(i)] = str(json_sense['grammar_info'])  # 문법
 
                 if 'example_info' in json_sense:
-                    json_exam = json_sense['example_info'][0]
-                    ws[columns_a[18] + str(i)] = json_exam['example']  # 용례
-                    if 'source' in json_exam:
-                        ws[columns_a[19] + str(i)] = json_exam['source']  # 용례의 출처
-                    if 'origin' in json_exam:
-                        ws[columns_a[20] + str(i)] = json_exam['origin']  # 용례의 원문
+                    example = ''
+                    source = ''
+                    origin = ''
+                    for j in range(len(json_sense['example_info'])):
+                        json_exam = json_sense['example_info'][j]
+                        example = example + json_exam['example'] + ', '
+                        if 'source' in json_exam:
+                            source = source + json_exam['source'] + ', '
+                        if 'origin' in json_exam:
+                            origin = origin + json_exam['origin'] + ', '
+                    ws[columns_a[18] + str(i)] = example[0:len(example) - 2]  # 용례
+                    ws[columns_a[19] + str(i)] = source[0:len(source) - 2]  # 용례의 출처
+                    ws[columns_a[20] + str(i)] = origin[0:len(origin) - 2]  # 용례의 원문
 
                 if 'relation_info' in json_sense:
                     relation = ''
