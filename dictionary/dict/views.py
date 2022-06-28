@@ -17,6 +17,8 @@ def search(request):
     context = []
     if 'kw' in request.GET:
         query = request.GET.get('kw')
+        if query == "":
+            return render(request, 'dict//searched.html')
         search_result = client.search(engine_name, query, {'sort': {"sense_no": "asc"}})
         if len(search_result) == 0:
             return render(request, 'dict//searched.html')

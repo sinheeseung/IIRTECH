@@ -15,14 +15,14 @@
 
                 <div class = 'container'>
                     <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no.raw }}</h5>
-                    {% if word.pronunciation.raw != "None" %}
+                    {% if word.pronunciation.raw != None %}
                         <h3 style = 'margin: 0'>{{ word.pronunciation.raw}}</h3>
                     {% endif %}
                 </div>
             </div>
             <h2 style = 'margin: 0'>{{ word.definition.raw}}</h2>
         {% endfor %}
-    {% else %}<!-- 검색란이 공란인지 확인-->
+    {% else %}<!-- 검색 결과가 없는 경우-->
         <b><i> Not Found</i></b>
 {% endif %}
 </div>
