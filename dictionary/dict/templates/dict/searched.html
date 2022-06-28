@@ -22,7 +22,7 @@
             </div>
             <h2 style = 'margin: 0'>{{ word.definition.raw}}</h2>
         {% endfor %}
-    {% elif search_term %}<!-- 검색란이 공란인지 확인-->
+    {% else %}<!-- 검색란이 공란인지 확인-->
         <b><i> Not Found</i></b>
 {% endif %}
 </div>
