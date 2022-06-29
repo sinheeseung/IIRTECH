@@ -3,13 +3,12 @@ from django.shortcuts import render
 from elastic_app_search import Client
 
 '''
-원어
-언어
+원어/ 언어
 활용/ 발음 0
 준말/ 발음 0
 용례  0
 관련 어휘/ 유형 0
-대역어
+대역어/ 언어 0
 속담/뜻풀이/유형
 '''
 client = Client(
@@ -29,7 +28,6 @@ def search(request):
         query = request.GET.get('kw')
         if query == "":
             return render(request, 'dict//searched.html')
-        # {'sort': {"sense_no": "asc"}}
         search_result = client.search(engine_name, query, dict(sort={"sense_no": "asc"}))
         if len(search_result) == 0:
             return render(request, 'dict//searched.html')
@@ -80,11 +78,13 @@ def index(request, pk):
     relation_type = get_result(result, "relation_type")
     relation_dic = {}
     word_list = []
-    for i in range(len(relation_word)):
-        if i != 0 and relation_type[i] != relation_type[i-1]:
-            relation_dic[relation_type[i-1]] = word_list
-            word_list = []
-        word_list.append(relation_word[i])
-    relation_dic[relation_type[len(relation_type)-1]] = word_list
+    if relation_word is not None:
+        for i in range(len(relation_word)):
+            if i != 0 and relation_type[i] != relation_type[i-1]:
+                relation_dic[relation_type[i-1]] = word_list
+                word_list = []
+            word_list.append(relation_word[i])
+        relation_dic[relation_type[len(relation_type)-1]] = word_list
+
     return render(request, 'dict//item.html', {'result': result, 'example': example,
                                                'conjugation': conju_dic, 'abbreviation': abbre_dic, 'relation': relation_dic})

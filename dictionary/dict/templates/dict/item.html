@@ -49,6 +49,12 @@
                 <dt>고유어 여부</dt>
                 <dt><span class="word_att_type1">「{{result.word_type.raw}}」 </span></dt>
             </dl>
+            {% if result.translation.raw != None %}
+                <dl>
+                    <dt>대역어</dt>
+                    <dt><span class="word_att_type1">{{result.translation.raw}}({{result.translation_language.raw}}) </span></dt>
+                </dl>
+            {% endif %}
             <!-- 분류/분야 -->
 
             <!-- 전문 분야 -->
@@ -74,9 +80,9 @@
                 <dl class="cont_01 mt20">
                     <!-- 용례 - 기본 -->
                     {% for word in example %}
-                        <dd class="exmpleConts">
+                        <li>
                             {{word}}
-                        </dd>
+                        </li>
                     {% endfor %}
                 </dl>
             {% endif %}
@@ -99,7 +105,7 @@
                     <!-- 용례 - 기본 -->
                     {% for key, value in abbreviation.items %}
                         <dd class="exmpleConts">
-                            {{key}} : {{ value}}
+                            {{key}} : {{value}}
                         </dd>
                     {% endfor %}
                 </dl>
@@ -138,240 +144,6 @@
                 </dt>
                 <dd>부정(不淨)한 것을 대하듯 하다.
                     <ul class="dot"></ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">관용구</span><a href="/dictionary/view?word_no=528450&amp;sense_no=612037">소금을 굽다</a>
-                </dt>
-                <dd>아주 찬 방 따위에서 매우 춥게 자다.
-                    <ul class="dot">
-
-                        <li>
-                            어젯밤 <b>소금을 굽고</b> 났더니 감기가 심하게 걸렸다.
-                        </li>
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528461&amp;sense_no=612048">소금도 곰팡 난다</a>
-                </dt>
-                <dd>절대 상하지 아니할 것이라고 생각하는 소금도 상할 때가 있다는 뜻으로, 무슨 일이든 절대 탈이 생기지 아니한다고 장담할 수는 없다는 말.
-
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528462&amp;sense_no=612049">소금도 쉴 때가 있다</a>
-                </dt>
-                <dd>‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612048');return false;">소금도 곰팡 난다</a>’의 북한 속담.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528463&amp;sense_no=612050">소금도 없이 간 내먹다</a>
-                </dt>
-                <dd>준비나 밑천도 없이 큰 이득을 보려 하는 경우를 비꼬는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528451&amp;sense_no=612038">소금 먹던 게 장을 먹으면 조갈병에 죽는다</a>
-                </dt>
-                <dd>소금만 먹던 이가 장맛을 보고는 좋다고 너무 먹다가 조갈이 든다는 뜻으로, 없이 살던 사람이 돈이 좀 생기면 사치에 빠지기 쉽다는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528452&amp;sense_no=612039">소금 먹은 놈이 물켠다</a>
-                </dt>
-                <dd>무슨 일이든 거기에는 반드시 그렇게 된 까닭이 있음을 비유적으로 이르는 말. &lt;동의 속담&gt; ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '610222');return false;">먹는 놈이 똥을 눈다</a>’ ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '610228');return false;">먹는 소가 똥을 누지</a>’ ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612041');return false;">소금 먹은 소가 물을 켜지</a>’
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528454&amp;sense_no=612041">소금 먹은 소가 물을 켜지</a>
-                </dt>
-                <dd>무슨 일이든 거기에는 반드시 그렇게 된 까닭이 있음을 비유적으로 이르는 말. &lt;동의 속담&gt; ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612039');return false;">소금 먹은 놈이 물켠다</a>’ ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '610222');return false;">먹는 놈이 똥을 눈다</a>’ ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '610228');return false;">먹는 소가 똥을 누지</a>’
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528453&amp;sense_no=612040">소금 먹은 소 굴우물 들여다보듯</a>
-                </dt>
-                <dd>소금 먹은 소가 목이 말라 깊은 굴우물을 들여다보며 안타까워한다는 뜻으로, 무엇을 골똘하게 궁리하거나 해결 방도를 찾지 못하여 애쓰는 모양을 비유적으로 이르는 말. &lt;동의 속담&gt; ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '610355');return false;">목마른 송아지 우물 들여다보듯</a>’
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528455&amp;sense_no=612042">소금 먹은 쥐 물로 간다</a>
-                </dt>
-                <dd>‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612039');return false;">소금 먹은 놈이 물켠다</a>’의 북한 속담.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528456&amp;sense_no=612043">소금 먹은 푸성귀</a>
-                </dt>
-                <dd>기가 죽어 후줄근한 사람을 비유적으로 이르는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528458&amp;sense_no=612045">소금 섬을 물로 끌라고 해도 끈다</a>
-                </dt>
-                <dd>소금 섬을 물로 끌면 소금이 녹아 없어져서 애쓴 보람도 없이 일을 망치고 마는 데도 아무 생각 없이 남이 시키니까 한다는 뜻으로, 무슨 일이든 시키는 대로 맹목적으로 하는 경우를 비유적으로 이르는 말. &lt;동의 속담&gt; ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '605049');return false;">여울로 소금 섬을 끌래도 끌지</a>’
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528457&amp;sense_no=612044">소금 섬 지고 물로 가겠다</a>
-                </dt>
-                <dd>‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612045');return false;">소금 섬을 물로 끌라고 해도 끈다</a>’의 북한 속담.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528459&amp;sense_no=612046">소금 실은 배만 하다</a>
-                </dt>
-                <dd>소금 실은 배가 소금기가 배어서 조금은 짜다는 뜻으로, 아주 남은 아니고 아주 먼 인척 관계와 같이 약간 관계가 있는 경우를 이르는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528464&amp;sense_no=612052">소금에 아니 전 놈이 장에 절까</a>
-                </dt>
-                <dd>소금에 절여도 그대로인 것이 소금기가 덜한 장으로 절인다고 절여지겠느냐는 뜻으로, 더 큰 흉계나 모략도 이겨 낸 사람이 그보다 작은 어지간한 일에 못 견딜 리가 없다는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528465&amp;sense_no=612053">소금으로 장을 담근다 해도 곧이듣지 않는다</a>
-                </dt>
-                <dd>아무리 사실대로 말하여도 믿지 아니함을 비유적으로 이르는 말. &lt;동의 속담&gt; ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '615490');return false;">콩으로 메주를 쑨다 하여도 곧이듣지 않는다</a>’ ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '615474');return false;">콩 가지고 두부 만든대도 곧이 안 듣는다</a>’
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528466&amp;sense_no=612054">소금을 팔러 나섰더니 비가 온다</a>
-                </dt>
-                <dd>매사에 장애가 생겨서 일이 맞아떨어지지 아니하고 잘 안되는 경우를 비유적으로 이르는 말. &lt;동의 속담&gt;‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612047');return false;">소금 타러[팔러] 가면 비가 오고 가루 팔러 가면 바람 분다</a>’
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528467&amp;sense_no=612055">소금이 쉰다</a>
-                </dt>
-                <dd>틀림없다고 믿었던 일이 뜻밖에 어긋났을 경우를 비유적으로 이르는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528469&amp;sense_no=612057">소금이 쉴까</a>
-                </dt>
-                <dd>어떤 일에도 절대로 굽히거나 변하지 아니하고 틀림없어 매우 미더움을 강조하여 이르는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528468&amp;sense_no=612056">소금이 쉴 때까지 해보자</a>
-                </dt>
-                <dd>시간이 오래 걸리더라도 어떤 일에 대하여 반드시 끝장을 내겠다는 말.
-                    <ul class="dot">
-
-                    </ul>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>
-
-                    <span class="proverb_type01 mr15">속담</span><a href="/dictionary/view?word_no=528460&amp;sense_no=612047">소금 타러[팔러] 가면 비가 오고 가루 팔러 가면 바람 분다</a>
-                </dt>
-                <dd>매사에 장애가 생겨서 일이 맞아떨어지지 아니하고 잘 안되는 경우를 비유적으로 이르는 말. &lt;동의 속담&gt; ‘<a href="#" class="wordPageView" onclick="javascript:fnWordInfoView('sense', '612054');return false;">소금을 팔러 나섰더니 비가 온다</a>’
-                    <ul class="dot">
-
-                    </ul>
                 </dd>
             </dl>
 
