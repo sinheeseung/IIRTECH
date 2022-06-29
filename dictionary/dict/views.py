@@ -1,7 +1,17 @@
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from elastic_app_search import Client
 
+'''
+원어
+언어
+활용/ 발음 0
+준말/ 발음 0
+용례  0
+관련 어휘/ 유형 0
+대역어
+속담/뜻풀이/유형
+'''
 client = Client(
     # elastic app search engine의 Credentials
     # https://를 제외한 Endpoint + /api/as/v1
@@ -19,7 +29,8 @@ def search(request):
         query = request.GET.get('kw')
         if query == "":
             return render(request, 'dict//searched.html')
-        search_result = client.search(engine_name, query, {'sort': {"sense_no": "asc"}})
+        # {'sort': {"sense_no": "asc"}}
+        search_result = client.search(engine_name, query, dict(sort={"sense_no": "asc"}))
         if len(search_result) == 0:
             return render(request, 'dict//searched.html')
         for i in range(len(search_result['results'])):
@@ -33,8 +44,47 @@ def main(request):
     return render(request, 'dict//base.html')
 
 
+def get_result(result, string):
+    if result[string]['raw'] is not None:
+        return result[string]['raw'].split(', ')
+    return
+
+
+def get_pro_result(result, string):
+    value = []
+    if result[string]['raw'] is not None:
+        value = result[string]['raw'].split('], ')
+    for i in range(len(value)-1):
+        value[i] = value[i] + "]"
+    return value
+
+
 def index(request, pk):
     search_result = client.search(engine_name, pk, {})
     result = search_result['results'][0]
-    return render(request, 'dict//item.html', {'result': result})
+    example = get_result(result, "example")
 
+    conjugation = get_result(result, "conjugation")
+    conjugation_pro = get_pro_result(result, "conjugation_pro")
+    conju_dic = {}
+    if conjugation is not None and conjugation_pro is not None:
+        conju_dic = {name: value for name, value in zip(conjugation, conjugation_pro)}
+
+    abbreviation = get_result(result, "abbreviation")
+    abbreviation_pro = get_pro_result(result, "abbreviation_pro")
+    abbre_dic = {}
+    if abbreviation is not None and abbreviation_pro is not None:
+        abbre_dic = {name: value for name, value in zip(abbreviation, abbreviation_pro)}
+
+    relation_word = get_result(result, "relation_word")
+    relation_type = get_result(result, "relation_type")
+    relation_dic = {}
+    word_list = []
+    for i in range(len(relation_word)):
+        if i != 0 and relation_type[i] != relation_type[i-1]:
+            relation_dic[relation_type[i-1]] = word_list
+            word_list = []
+        word_list.append(relation_word[i])
+    relation_dic[relation_type[len(relation_type)-1]] = word_list
+    return render(request, 'dict//item.html', {'result': result, 'example': example,
+                                               'conjugation': conju_dic, 'abbreviation': abbre_dic, 'relation': relation_dic})

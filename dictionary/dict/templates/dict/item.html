@@ -24,23 +24,40 @@
         <span class="floatR mt2"></span>
         <div class="word_head_txt">
             <!-- 발음 -->
-            {% if result.pronunciation.raw %}
+            {% if result.pronunciation.raw != None %}
                 <dl>
                     <dt>발음</dt>
-                    <dl><span class="search_sub">{{result.pronunciation.raw}}</span></dl>
+                    <dt><span class="search_sub">{{result.pronunciation.raw}}</span></dt>
                 </dl>
             {% endif %}
             <!-- 활용 -->
 
             <dl>
                 <dt>품사</dt>
-                <dl><span class="word_att_type1">「{{result.pos.raw}}」 </span></dl>
+                <dt><span class="word_att_type1">「{{result.pos.raw}}」 </span></dt>
             </dl>
 
+            <dl>
+                <dt>구성 단위</dt>
+                <dt><span class="word_att_type1">「{{result.word_unit.raw}}」 </span></dt>
+            </dl>
+            <dl>
+                <dt>범주</dt>
+                <dt><span class="word_att_type1">「{{result.type.raw}}」 </span></dt>
+            </dl>
+            <dl>
+                <dt>고유어 여부</dt>
+                <dt><span class="word_att_type1">「{{result.word_type.raw}}」 </span></dt>
+            </dl>
             <!-- 분류/분야 -->
 
-            <!-- 학명 -->
-
+            <!-- 전문 분야 -->
+            {% if result.cat.raw != None %}
+            <dl>
+                <dt>전문 분야</dt>
+                <dt><span class="word_att_type1">{{result.cat.raw}}</span></dt>
+            </dl>
+            {% endif %}
         </div>
 
         <!-- 기본목록 start -->
@@ -53,36 +70,41 @@
                 </dt>
             </dl>
             <!-- 용례 -->
-            <dl class="cont_01 mt20">
-                <!-- 용례 - 기본 -->
-                <dd class="exmpleConts">
-                    <strong>소금</strong> 닷 되.
-                </dd>
-                <dd class="exmpleConts">
-                    <strong>소금</strong> 두 섬.
-                </dd>
-                <dd class="exmpleConts">
-                    <strong>소금을</strong> 치다.
-                </dd>
-                <dd class="exmpleConts">
-                    배추를 <strong>소금으로</strong> 절이다.
-                </dd>
-                <dd class="exmpleConts">
-                    그는 삶은 달걀을 <strong>소금에</strong> 찍어 먹었다.
-                </dd>
-                <dd class="exmpleConts">
-                    상하기 쉬운 음식은 <strong>소금에</strong> 절이고 콩기름으로 튀겨 단단히 갈무리해 두었다.≪윤흥길, 장마≫
-                </dd>
-                <dd class="exmpleConts">
-                    우리는 애써 옛날 시골에서 이런 굵은 <strong>소금으로</strong> 이를 닦던 일을 생각하면서 <strong>소금</strong> 묻은 이를 벌인 채 히죽히죽 웃어 댔다.≪최일남, 서울 사람들≫
-                </dd>
-                <dd class="exmpleConts">
-                    정란이 세숫대야를 들고 나와 이규의 발밑에 놓았다. 양치 <strong>소금과</strong> 양칫물과 비누도 갖다 놓았다.≪이병주, 지리산≫
-                </dd>
-                <dd class="exmpleConts">
-                    대불이는 무 캐 먹다 들킨 사람처럼 놀라며, 양치질을 하기 위해 <strong>소금이</strong> 들어 있는 종지를 집어 들고 대추나무 밑으로 어정어정 걸어갔다.≪문순태, 타오르는 강≫
-                </dd>
-            </dl>
+            {% if example != None %}
+                <dl class="cont_01 mt20">
+                    <!-- 용례 - 기본 -->
+                    {% for word in example %}
+                        <dd class="exmpleConts">
+                            {{word}}
+                        </dd>
+                    {% endfor %}
+                </dl>
+            {% endif %}
+
+            <!-- 활용 -->
+            {% if conjugation != None %}
+                <dl class="cont_01 mt20">
+                    <!-- 용례 - 기본 -->
+                    {% for key, value in conjugation.items %}
+                        <dd class="exmpleConts">
+                            {{key}} : {{ value}}
+                        </dd>
+                    {% endfor %}
+                </dl>
+            {% endif %}
+
+            <!-- 준말 -->
+            {% if abbreviation != None %}
+                <dl class="cont_01 mt20">
+                    <!-- 용례 - 기본 -->
+                    {% for key, value in abbreviation.items %}
+                        <dd class="exmpleConts">
+                            {{key}} : {{ value}}
+                        </dd>
+                    {% endfor %}
+                </dl>
+            {% endif %}
+
         </div>
         <!--// 기본목록 end -->
 
@@ -90,175 +112,19 @@
         <div class="search_view_list group">
             <p class="tit">관련 어휘</p>
             <div class="search_meaning ">
-                <dl>
-                    <dt>비슷한말</dt>
-                    <dd><a href="/dictionary/view?sense_no=18433" target="_blank">염<span class="rel_dis">(鹽)</span></a>, <a href="/dictionary/view?sense_no=230661" target="_blank">염화<span class="rel_dis">(鹽貨)</span></a></dd>
-                </dl>
-
-                <dl>
-                    <dt class="mt_20">지역어(방언)</dt>
-                    <dd class="mt_20" style="word-break:keep-all;"><a href="/dictionary/view?sense_no=717963" target="_blank">소굼<span class="rel_dis">(강원, 경상, 전라, 충청, 중국 길림성, 중국 흑룡강성)</span></a>, <a href="/dictionary/view?sense_no=1048593" target="_blank">소곰<span class="rel_dis">(경남, 제주)</span></a>, <a href="/dictionary/view?sense_no=920410" target="_blank">솜<span class="rel_dis">(경남)</span></a>, <a href="/dictionary/view?sense_no=717975" target="_blank">쏘곰<span class="rel_dis">(경북)</span></a>, <a href="/dictionary/view?sense_no=717981" target="_blank">쏘금<span class="rel_dis">(경북)</span></a>, <a href="/dictionary/view?sense_no=717979" target="_blank">쏘굼<span class="rel_dis">(경상, 중국 흑룡강성)</span></a>, <a href="/dictionary/view?sense_no=717966" target="_blank">쇠금<span class="rel_dis">(전북)</span></a>, <a href="/dictionary/view?sense_no=717955" target="_blank">답승<span class="rel_dis">(함경)</span></a>, <a href="/dictionary/view?sense_no=717970" target="_blank">싹싸기<span class="rel_dis">(함남)</span></a>, <a href="/dictionary/view?sense_no=717982" target="_blank">탑수이<span class="rel_dis">(함남)</span></a>, <a href="/dictionary/view?sense_no=717985" target="_blank">탑쉬<span class="rel_dis">(함남)</span></a></dd>
-                </dl>
-
-                <dl>
-                    <dt class="mt_20">옛말</dt>
-                    <dd class="mt_20" style="word-break:keep-all;"><a href="/dictionary/view?sense_no=196278" target="_blank">소곰</a></dd>
-                </dl>
+                {% for key, value in relation.items %}
+                    <dl>
+                        <dt>{{key}}</dt>
+                        <dd>{{value}}</dd>
+                    </dl>
+                {% endfor %}
             </div>
         </div>
 
-        <!-- 로마자 -->
-
         <!-- 대역어 -->
-
-        <!-- 어원, 역사정보 -->
-
-        <div class="search_view_list group">
-
-            <p class="tit">역사 정보</p>
-
-            <p class="black6">
-                소곰(15세기~19세기)&gt;소금(15세기~현재)
-            </p>
-
-            <table class="boardList Left history_tbl mt15">
-                <colgroup>
-                    <col width="20%">
-                    <col>
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th scope="row">설명</th>
-                    <td>현대 국어 ‘소금’의 옛말인 ‘소곰’은 15세기 문헌에서부터 나타난다. ‘소곰’은 제1음절 모음과 제2음절 모음이 ‘ㅗ’로 동일하여 동일음이 반복되는 것을 피하기 위해 제2음절 모음이 ‘ㅗ’에서 ‘ㅡ’로 변하였다. 이에 15세기부터 ‘소곰’과 ‘소금’이 공존하다가 20세기 이후 ‘소금’으로 정착하면서 현재에 이르렀다.</td>
-                </tr>
-                <tr>
-                    <th scope="row">이형태/이표기</th>
-                    <td>소곰, 쇼곰, 소금</td>
-                </tr>
-
-                <tr>
-                    <th scope="row">세기별 용례</th>
-                    <td>
-
-                        <p class="tit">뜻풀이</p>
-                        <div class="tbl mb20">
-
-                            <dl>
-                                <dt>15세기 : (소곰, 소금)</dt>
-
-                                <dd>
-
-                                    가마 미틧 검듸 半 兩과 <strong>소곰</strong>  돈 섯거 라 더운 믈  盞애 프러 머그라
-                                    ≪1466 구급방 상:16ㄴ≫
-
-
-                                </dd>
-
-                                <dd>
-
-                                    밀 <strong>소금</strong> 술  되어나 두 되어나 덥게 고
-                                    ≪<span class="pointer" title="구급간이방언해(1489)">1489 구간 2:57ㄴ</span>≫
-
-                                </dd>
-
-                            </dl>
-
-                            <dl>
-                                <dt>16세기 : (소곰, 소금)</dt>
-
-                                <dd>
-
-                                    漢老ㅣ 大便을 맛보더니 죽거늘 三年侍墓고 <strong>소곰이며</strong>  먹디 아니터라
-                                    ≪<span class="pointer" title="속삼강행실도(1514)">1514 속삼 효:16ㄱ</span>≫
-
-                                </dd>
-
-                                <dd>
-
-                                    한뇌 대변을 맛보더니 죽거 삼년시묘 고 <strong>소금과</strong> 믈을 먹디 아니더라
-                                    ≪<span class="pointer" title="속삼강행실도(중간본)(1581)">1581 속삼-중 효:16ㄱ</span>≫
-
-                                </dd>
-
-                            </dl>
-
-                            <dl>
-                                <dt>17세기 : (소곰, 소금)</dt>
-
-                                <dd>
-
-                                      법의 <strong>소곰을</strong> 아긔 손바당 발바당의 고
-                                    ≪<span class="pointer" title="언해태산집요(1608)">1608 언태 24ㄱ</span>≫
-
-                                </dd>
-
-                                <dd>
-
-                                    주그매 미처 무덤의 녀막고  실과 <strong>소금</strong> 쟝 아니 먹고
-                                    ≪1617 동신속 효2:47ㄴ≫
-
-                                </dd>
-
-                            </dl>
-
-                            <dl>
-                                <dt>18세기 : (소곰, 소금)</dt>
-
-                                <dd>
-                                    내 맛 보니 져기 슴거온 다 다시 져기 <strong>소곰</strong> 두라
-                                    ≪<span class="pointer" title="노걸대신석언해(1763)">1763 노신 1:27ㄴ</span>≫
-                                </dd>
-
-                                <dd>
-                                    屍汁을 取야 달히면 오히려 能히 <strong>소금이</strong> 되니라
-                                    ≪1792 무원 3:63ㄴ≫
-                                </dd>
-
-
-                            </dl>
-
-                            <dl>
-                                <dt>19세기 : (소곰, 소금, 쇼곰)</dt>
-
-                                <dd>
-
-                                    <strong>소곰</strong> 칠 홉을 복고 진말 팔 홉을 소금과 가지로 빗치 누르도록 복가
-                                    ≪<span class="pointer" title="규합총서(1869)">1869 규합 6ㄱ</span>≫
-
-                                </dd>
-
-                                <dd>
-
-                                    소곰 칠 홉을 복고 진말 팔 홉을 <strong>소금과</strong> 가지로 빗치 누르도록 복가
-                                    ≪<span class="pointer" title="규합총서(1869)">1869 규합 6ㄱ</span>≫
-
-                                </dd>
-
-                                <dd>
-
-                                    <strong>쇼곰</strong> 굽 무 의론미라
-                                    ≪<span class="pointer" title="이언언해(1883)">1883 이언 2:23ㄱ</span>≫
-
-                                </dd>
-
-                            </dl>
-
-                        </div>
-
-                    </td>
-                </tr>
-
-                </tbody>
-            </table>
-            <div id="exampleMore" class="more_view more_off floatR mt10"><a href="#" class="btn_more_op" id="history_tbl">닫기</a></div>
-
-        </div>
-
-        <!-- 멀티미디어  -->
 
     </div>
 
-    <!-- 학습정보 - 멀티미디어  -->
 
     <!-- 관용구, 속담 -->
 
