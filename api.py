@@ -148,17 +148,17 @@ def search_for_words_in_opendict(words):
                 if 'region_info' in json_sense:  # *****************************
                     ws[columns_a[23] + str(i)] = str(json_sense['region_info'])  # 방언지역
 
-                if 'proverb_info' in json_word:
+                if 'proverb_info' in json_sense:
                     proverb = ''
                     proverb_defi = ''
                     proverb_type = ''
-                    for j in range(len(json_word['proverb_info'])):
-                        proverb = proverb + json_word['proverb_info'][j]['word']
-                        proverb_defi = proverb_defi + json_word['proverb_info'][j]['definition']
-                        proverb_type = proverb_type + json_word['proverb_info'][j]['type']
-                    ws[columns_a[24] + str(i)] = proverb[0:len(proverb) - 2]              # 속담, 관용구
-                    ws[columns_a[25] + str(i)] = proverb_defi[0:len(proverb_defi) - 2]  # 뜻풀이
-                    ws[columns_a[26] + str(i)] = proverb_type[0:len(proverb_type) - 2]  # 유형
+                    for j in range(len(json_sense['proverb_info'])):
+                        proverb = proverb + json_sense['proverb_info'][j]['word'] + "   "
+                        proverb_defi = proverb_defi + json_sense['proverb_info'][j]['definition'] + "   "
+                        proverb_type = proverb_type + json_sense['proverb_info'][j]['type'] + "   "
+                    ws[columns_a[24] + str(i)] = proverb[0:len(proverb) - 3]              # 속담, 관용구
+                    ws[columns_a[25] + str(i)] = proverb_defi[0:len(proverb_defi) - 3]  # 뜻풀이
+                    ws[columns_a[26] + str(i)] = proverb_type[0:len(proverb_type) - 3]  # 유형
 
                 ws[columns_a[27] + str(i)] = json_item['target_code']
                 i += 1
