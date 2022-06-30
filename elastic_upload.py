@@ -23,7 +23,7 @@ count = 0
 for i in range(len(json_data)):
     client.index_document(engine_name, json_data[i])
     if i % 100 == 0:
-        print(i, 'document art indexed')
+        print(i, 'document are indexed')
 
 '''while count < len(json_data):
     data_end = (count + 100) if (count + 100) < len(json_data) else len(json_data)
