@@ -16,7 +16,7 @@
 
         <div class="group" id="word_hearder_dt">
 
-            <span class="word_head">{{result.word.raw}}</span>
+            <h1>{{result.word.raw}}</h1>
 
             <div id="chi_tooltip_layer" class="chi_tooltip chi_info" style="display:none"></div>
 
@@ -49,6 +49,13 @@
                 <dt>고유어 여부</dt>
                 <dt><span class="word_att_type1">「{{result.word_type.raw}}」 </span></dt>
             </dl>
+            {% for key,value in language.items %}
+                {% if key != '/' %}
+                    <dl>
+                        <dt>{{key}}({{value}})</dt>
+                    </dl>
+                {% endif %}
+            {% endfor %}
             {% if result.translation.raw != None %}
                 <dl>
                     <dt>대역어</dt>
@@ -93,7 +100,7 @@
                     <!-- 용례 - 기본 -->
                     {% for key, value in conjugation.items %}
                         <dd class="exmpleConts">
-                            {{key}} : {{ value}}
+                            {{key}} : {{value}}
                         </dd>
                     {% endfor %}
                 </dl>
@@ -135,18 +142,20 @@
     <!-- 관용구, 속담 -->
 
     <div class="search_view_list">
-        <p class="tit">관용구·속담<span class="rel_dis14 ml5">(<strong>21</strong>)</span></p>
+        <p class="tit">관용구·속담<span class="rel_dis14 ml5">({{proverb|length}})</span></p>
         <div class="search_proverb ">
-
-            <dl>
-                <dt>
-                    <span class="proverb_type01 mr15">관용구</span><a href="/dictionary/view?word_no=528449&amp;sense_no=612036">소금 들고 덤비다</a>
-                </dt>
-                <dd>부정(不淨)한 것을 대하듯 하다.
-                    <ul class="dot"></ul>
-                </dd>
-            </dl>
-
+            {% for key, value in proverb.items %}
+                {% for key2, value2 in value.items %}
+                    <dl>
+                        <dt>
+                            <span class="proverb_type01 mr15">{{value2}}  </span><a>  {{key}}</a>
+                        </dt>
+                        <dd>{{key2}}
+                            <ul class="dot"></ul>
+                        </dd>
+                    </dl>
+                {% endfor %}
+            {% endfor %}
         </div>
 
     </div>
