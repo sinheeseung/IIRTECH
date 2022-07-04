@@ -124,7 +124,7 @@ def search_for_words_in_opendict(words):
                     example = ''
                     for j in range(len(json_sense['example_info'])):
                         json_exam = json_sense['example_info'][j]
-                        example = example + json_exam['example'] + ', '
+                        example = example + json_exam['example'] + ',  '
                     ws[columns_a[18] + str(i)] = example[0:len(example) - 2]  # 용례
 
                 if 'relation_info' in json_sense:

@@ -60,7 +60,7 @@ def get_pro_result(result, string):
 def index(request, pk):
     search_result = client.search(engine_name, pk, {})
     result = search_result['results'][0]
-    example = get_result(result, "example", ', ')
+    example = get_result(result, "example", ',  ')
 
     conjugation = get_result(result, "conjugation", ', ')
     conjugation_pro = get_pro_result(result, "conjugation_pro")
@@ -85,6 +85,7 @@ def index(request, pk):
                 word_list = []
             word_list.append(relation_word[i])
         relation_dic[relation_type[len(relation_type) - 1]] = word_list
+
     proverb = get_result(result, 'proverb', '   ')
     pro_defi = get_result(result, 'pro_defi', '   ')
     pro_type = get_result(result, 'pro_type', '   ')
@@ -100,4 +101,5 @@ def index(request, pk):
         language_dict = {name: value for name, value in zip(original_language, language_type)}
     return render(request, 'dict//item.html', {'result': result, 'example': example,
                                                'conjugation': conju_dic, 'abbreviation': abbre_dic,
-                                               'relation': relation_dic, 'proverb': proverb_dict, 'language': language_dict})
+                                               'relation': relation_dic, 'proverb': proverb_dict,
+                                               'language': language_dict})
