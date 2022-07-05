@@ -1,7 +1,5 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 from elastic_app_search import Client
-
 '''
 원어/ 언어 0
 활용/ 발음 0
@@ -61,6 +59,11 @@ def index(request, pk):
     search_result = client.search(engine_name, pk, {})
     result = search_result['results'][0]
     example = get_result(result, "example", ',  ')
+    if example is not None:
+        last = example[len(example)-1]
+        example[len(example)-1] = last[0:len(last)-1]
+        for i in range(len(example)):
+            example[i] = example[i].replace("}", "").replace("{", "")
 
     conjugation = get_result(result, "conjugation", ', ')
     conjugation_pro = get_pro_result(result, "conjugation_pro")
