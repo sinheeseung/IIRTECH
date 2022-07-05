@@ -13,64 +13,57 @@
         <!-- 표제어 -->
 
         <!-- 품사/문형 -->
+        <div class = 'container' style = 'display: flex'>
+                <body link = "0000ff" vlink="0000ff">
+                        <h1 style = 'margin-right: 10px; margin-bottom: 0'>{{result.word.raw}}</h1>
+                </body>
 
-        <div class="group" id="word_hearder_dt">
-
-            <h1>{{result.word.raw}}</h1>
-
-            <div id="chi_tooltip_layer" class="chi_tooltip chi_info" style="display:none"></div>
-
+                <div class = 'container'>
+                    <h4 style = 'margin-top: 5; margin-bottom: 0; text-align : center'>「{{result.word_type.raw}}」</h4>
+                    <div style='display: flex'>
+                        {% for key,value in language.items %}
+                            {% if key != '/' %}
+                                <p style="margin:0">{{key}}({{value}})  </p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
         </div>
-        <span class="floatR mt2"></span>
-        <div class="word_head_txt">
+
+
+        <div class = 'container' style = 'display: flex'>
             <!-- 발음 -->
             {% if result.pronunciation.raw != None %}
-                <dl>
+                <div style = 'margin-right: 15px'>
                     <dt>발음</dt>
                     <dt><span class="search_sub">{{result.pronunciation.raw}}</span></dt>
-                </dl>
+                </div>
             {% endif %}
             <!-- 활용 -->
-
-            <dl>
+            <div style = 'margin-right: 15px'>
                 <dt>품사</dt>
                 <dt><span class="word_att_type1">「{{result.pos.raw}}」 </span></dt>
-            </dl>
+            </div>
 
-            <dl>
-                <dt>구성 단위</dt>
-                <dt><span class="word_att_type1">「{{result.word_unit.raw}}」 </span></dt>
-            </dl>
-            <dl>
+            <div style = 'margin-right: 15px'>
                 <dt>범주</dt>
                 <dt><span class="word_att_type1">「{{result.type.raw}}」 </span></dt>
-            </dl>
-            <dl>
-                <dt>고유어 여부</dt>
-                <dt><span class="word_att_type1">「{{result.word_type.raw}}」 </span></dt>
-            </dl>
-            {% for key,value in language.items %}
-                {% if key != '/' %}
-                    <dl>
-                        <dt>{{key}}({{value}})</dt>
-                    </dl>
-                {% endif %}
-            {% endfor %}
+            </div>
+
+            {% if result.cat.raw != None %}
+                <div style = 'margin-right: 15px'>
+                    <dt>전문 분야</dt>
+                    <dt><span class="word_att_type1">{{result.cat.raw}}</span></dt>
+                </div>
+            {% endif %}
+
             {% if result.translation.raw != None %}
-                <dl>
+                <div style = 'margin-right: 15px'>
                     <dt>대역어</dt>
                     <dt><span class="word_att_type1">{{result.translation.raw}}({{result.translation_language.raw}}) </span></dt>
-                </dl>
+                </div>
             {% endif %}
-            <!-- 분류/분야 -->
 
-            <!-- 전문 분야 -->
-            {% if result.cat.raw != None %}
-            <dl>
-                <dt>전문 분야</dt>
-                <dt><span class="word_att_type1">{{result.cat.raw}}</span></dt>
-            </dl>
-            {% endif %}
         </div>
 
         <!-- 기본목록 start -->
@@ -83,7 +76,7 @@
                 </dt>
             </dl>
             <!-- 용례 -->
-            {% if example != None %}
+            {% if example %}
                 <dl class="cont_01 mt20">
                     <!-- 용례 - 기본 -->
                     {% for word in example %}
@@ -95,9 +88,9 @@
             {% endif %}
 
             <!-- 활용 -->
-            {% if conjugation != None %}
+            {% if conjugation %}
                 <dl class="cont_01 mt20">
-                    <!-- 용례 - 기본 -->
+                    <dt>활용</dt>
                     {% for key, value in conjugation.items %}
                         <dd class="exmpleConts">
                             {{key}} : {{value}}
@@ -107,9 +100,9 @@
             {% endif %}
 
             <!-- 준말 -->
-            {% if abbreviation != None %}
+            {% if abbreviation %}
                 <dl class="cont_01 mt20">
-                    <!-- 용례 - 기본 -->
+                    <dt>준말</dt>
                     {% for key, value in abbreviation.items %}
                         <dd class="exmpleConts">
                             {{key}} : {{value}}
@@ -118,37 +111,38 @@
                 </dl>
             {% endif %}
 
+
         </div>
         <!--// 기본목록 end -->
 
         <!-- 관련 어휘 -->
+        {% if relation %}
         <div class="search_view_list group">
-            <p class="tit">관련 어휘</p>
+            <h4 class="tit" style="margin-bottom: 0">관련 어휘</h4>
             <div class="search_meaning ">
                 {% for key, value in relation.items %}
-                    <dl>
-                        <dt>{{key}}</dt>
+                    <dl style="margin: 0">
+                        <h5 style="margin: 0">{{key}}</h5>
                         <dd>{{value}}</dd>
                     </dl>
                 {% endfor %}
             </div>
         </div>
-
+        {% endif %}
         <!-- 대역어 -->
-
     </div>
 
 
     <!-- 관용구, 속담 -->
-
+    {% if proverb  %}
     <div class="search_view_list">
-        <p class="tit">관용구·속담<span class="rel_dis14 ml5">({{proverb|length}})</span></p>
+        <h4 class="tit" style="margin-bottom: 0">관용구·속담(<strong>{{proverb|length}}</strong>)</h4>
         <div class="search_proverb ">
             {% for key, value in proverb.items %}
                 {% for key2, value2 in value.items %}
-                    <dl>
+                    <dl style="margin-top: 5px">
                         <dt>
-                            <span class="proverb_type01 mr15">{{value2}}  </span><a>  {{key}}</a>
+                            <span class="proverb_type01 mr15">{{value2}}  </span><strong>  {{key}}</strong>
                         </dt>
                         <dd>{{key2}}
                             <ul class="dot"></ul>
@@ -157,9 +151,8 @@
                 {% endfor %}
             {% endfor %}
         </div>
-
     </div>
-
+    {% endif %}
 </div>
 
 {% endblock %}
