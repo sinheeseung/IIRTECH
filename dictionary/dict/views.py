@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from elastic_app_search import Client
-from django.core.paginator import  Paginator
+from django.core.paginator import Paginator
 '''
 원어/ 언어 0
 활용/ 발음 0
@@ -39,11 +39,15 @@ def get(query):
     return context
 
 
-def search(request, page=1):
+def search(request):
     if 'kw' in request.GET:
         query = request.GET.get('kw')
+        page = request.GET.get('page')  # 페이지
         context = get(query)
-        return render(request, 'dict//searched.html', {'context': context})
+        print(page)
+        paginator = Paginator(context, 10)  # 페이지당 10개씩 보여주기
+        page_obj = paginator.get_page(page)
+        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query})
     else:
         return render(request, 'dict//searched.html')
 
