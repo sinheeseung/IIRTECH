@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from elastic_app_search import Client
+from django.core.paginator import  Paginator
 '''
 원어/ 언어 0
 활용/ 발음 0
@@ -20,17 +21,28 @@ client = Client(
 engine_name = 'dictionary'
 
 
-def search(request):
+def get(query):
+    if query == "":
+        return {}
+    search_result = client.search(engine_name, query, {'sort': {"sense_no": "asc"}})
+    if len(search_result) == 0:
+        return {}
+    page = search_result['meta']['page']['total_pages']
     context = []
+    for i in range(1, page + 1):
+        search_result = client.search(engine_name, query, {
+            'sort': {"sense_no": "asc"},
+            'page': {'current': i}
+        })
+        for j in range(len(search_result['results'])):
+            context.append(search_result['results'][j])
+    return context
+
+
+def search(request, page=1):
     if 'kw' in request.GET:
         query = request.GET.get('kw')
-        if query == "":
-            return render(request, 'dict//searched.html')
-        search_result = client.search(engine_name, query, dict(sort={"sense_no": "asc"}))
-        if len(search_result) == 0:
-            return render(request, 'dict//searched.html')
-        for i in range(len(search_result['results'])):
-            context.append(search_result['results'][i])
+        context = get(query)
         return render(request, 'dict//searched.html', {'context': context})
     else:
         return render(request, 'dict//searched.html')
@@ -60,8 +72,8 @@ def index(request, pk):
     result = search_result['results'][0]
     example = get_result(result, "example", ',  ')
     if example is not None:
-        last = example[len(example)-1]
-        example[len(example)-1] = last[0:len(last)-1]
+        last = example[len(example) - 1]
+        example[len(example) - 1] = last[0:len(last) - 1]
         for i in range(len(example)):
             example[i] = example[i].replace("}", "").replace("{", "")
 
