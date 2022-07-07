@@ -44,7 +44,6 @@ def search(request):
         query = request.GET.get('kw')
         page = request.GET.get('page')  # 페이지
         context = get(query)
-        print(page)
         paginator = Paginator(context, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query})
