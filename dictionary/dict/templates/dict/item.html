@@ -13,7 +13,7 @@
         <!-- 표제어 -->
 
         <!-- 품사/문형 -->
-        <div class = 'container' style = 'display: flex'>
+        <div class = 'container' style = 'display: flex; margin-bottom:10px' >
                 <body link = "0000ff" vlink="0000ff">
                         <h1 style = 'margin-right: 10px; margin-bottom:0'>{{result.word.raw}}</h1>
                 </body>
@@ -64,6 +64,19 @@
                 </div>
             {% endif %}
 
+            {% if result.origin.raw != None %}
+                <div style = 'margin-right: 15px'>
+                    <dt>어원</dt>
+                    <dt><span class="word_att_type1">{{result.origin.raw}}</span></dt>
+                </div>
+            {% endif %}
+
+            {% if result.allomorph.raw != None %}
+                <div style = 'margin-right: 15px'>
+                    <dt>이형태</dt>
+                    <dt><span class="word_att_type1">{{result.allomorph.raw}}</span></dt>
+                </div>
+            {% endif %}
         </div>
 
         <!-- 기본목록 start -->
@@ -90,7 +103,7 @@
             <!-- 활용 -->
             {% if conjugation %}
                 <dl class="cont_01 mt20">
-                    <dt>활용</dt>
+                    <dt><strong>활용</strong></dt>
                     {% for key, value in conjugation.items %}
                         <dd class="exmpleConts">
                             {{key}} : {{value}}
@@ -102,7 +115,7 @@
             <!-- 준말 -->
             {% if abbreviation %}
                 <dl class="cont_01 mt20">
-                    <dt>준말</dt>
+                    <dt><strong>준말</strong></dt>
                     {% for key, value in abbreviation.items %}
                         <dd class="exmpleConts">
                             {{key}} : {{value}}
@@ -111,6 +124,14 @@
                 </dl>
             {% endif %}
 
+            {% if result.grammar.raw != None %}
+                <dl class="cont_01 mt20">
+                    <dt><strong>문법</strong></dt>
+                        <dd class="exmpleConts">
+                            {{result.grammar.raw}}
+                        </dd>
+                </dl>
+            {% endif %}
 
         </div>
         <!--// 기본목록 end -->
