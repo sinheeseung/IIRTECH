@@ -15,11 +15,11 @@
         <!-- 품사/문형 -->
         <div class = 'container' style = 'display: flex; margin-bottom:10px' >
                 <body link = "0000ff" vlink="0000ff">
-                        <h1 style = 'margin-right: 10px; margin-bottom:0'>{{result.word.raw}}</h1>
+                        <h1 style = 'margin-right: 10px; margin-bottom:0'>{{result.word}}</h1>
                 </body>
 
                 <div class = 'container'>
-                    <h4 style = 'margin-top: 5; margin-bottom: 0; text-align : center'>「{{result.word_type.raw}}」</h4>
+                    <h4 style = 'margin-top: 5; margin-bottom: 0; text-align : center'>「{{result.word_type}}」</h4>
                     <div style='display: flex'>
                         {% for key,value in language.items %}
                             {% if key != '/' %}
@@ -33,48 +33,48 @@
 
         <div class = 'container' style = 'display: flex'>
             <!-- 발음 -->
-            {% if result.pronunciation.raw != None %}
+            {% if result.pronunciation != None %}
                 <div style = 'margin-right: 15px'>
                     <dt>발음</dt>
-                    <dt><span class="search_sub">{{result.pronunciation.raw}}</span></dt>
+                    <dt><span class="search_sub">{{result.pronunciation}}</span></dt>
                 </div>
             {% endif %}
             <!-- 활용 -->
             <div style = 'margin-right: 15px'>
                 <dt>품사</dt>
-                <dt><span class="word_att_type1">「{{result.pos.raw}}」 </span></dt>
+                <dt><span class="word_att_type1">「{{result.pos}}」 </span></dt>
             </div>
 
             <div style = 'margin-right: 15px'>
                 <dt>범주</dt>
-                <dt><span class="word_att_type1">「{{result.type.raw}}」 </span></dt>
+                <dt><span class="word_att_type1">「{{result.type}}」 </span></dt>
             </div>
 
-            {% if result.cat.raw != None %}
+            {% if result.cat != None %}
                 <div style = 'margin-right: 15px'>
                     <dt>전문 분야</dt>
-                    <dt><span class="word_att_type1">{{result.cat.raw}}</span></dt>
+                    <dt><span class="word_att_type1">{{result.cat}}</span></dt>
                 </div>
             {% endif %}
 
-            {% if result.translation.raw != None %}
+            {% if result.translation != None %}
                 <div style = 'margin-right: 15px'>
                     <dt>대역어</dt>
-                    <dt><span class="word_att_type1">{{result.translation.raw}}({{result.translation_language.raw}}) </span></dt>
+                    <dt><span class="word_att_type1">{{result.translation}}({{result.translation_language}}) </span></dt>
                 </div>
             {% endif %}
 
-            {% if result.origin.raw != None %}
+            {% if result.origin != None %}
                 <div style = 'margin-right: 15px'>
                     <dt>어원</dt>
-                    <dt><span class="word_att_type1">{{result.origin.raw}}</span></dt>
+                    <dt><span class="word_att_type1">{{result.origin}}</span></dt>
                 </div>
             {% endif %}
 
-            {% if result.allomorph.raw != None %}
+            {% if result.allomorph != None %}
                 <div style = 'margin-right: 15px'>
                     <dt>이형태</dt>
-                    <dt><span class="word_att_type1">{{result.allomorph.raw}}</span></dt>
+                    <dt><span class="word_att_type1">{{result.allomorph}}</span></dt>
                 </div>
             {% endif %}
         </div>
@@ -85,7 +85,7 @@
 
             <dl class="cont_01">
                 <dt>
-                    <span style="font-size: large" class="word_no mr5">「{{result.sense_no.raw}}」 {{result.definition.raw}}</span>
+                    <span style="font-size: large" class="word_no mr5">「{{result.sense_no}}」 {{result.definition}}</span>
                 </dt>
             </dl>
             <!-- 용례 -->
@@ -124,11 +124,11 @@
                 </dl>
             {% endif %}
 
-            {% if result.grammar.raw != None %}
+            {% if result.grammar != None %}
                 <dl class="cont_01 mt20">
                     <dt><strong>문법</strong></dt>
                         <dd class="exmpleConts">
-                            {{result.grammar.raw}}
+                            {{result.grammar}}
                         </dd>
                 </dl>
             {% endif %}
