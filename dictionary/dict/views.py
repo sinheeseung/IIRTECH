@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from elasticsearch import Elasticsearch
-from elastic_app_search import Client
 from django.core.paginator import Paginator
+from .models import Recipe
 
 '''
 원어/ 언어 0
@@ -14,17 +14,6 @@ from django.core.paginator import Paginator
 '''
 
 es = Elasticsearch(["http://127.0.0.1:9200"])
-index = "word"
-
-client = Client(
-    # elastic app search engine의 Credentials
-    # https://를 제외한 Endpoint + /api/as/v1
-    base_endpoint='my-deployment-a1ad04.ent.us-central1.gcp.cloud.es.io/api/as/v1',
-    # elastic app search engine의 private-key
-    api_key='private-1x2hnqva8fdxj5msc6eqkhp4',
-    use_https=True
-)
-engine_name = 'dictionary'
 
 
 def get(q):
@@ -46,19 +35,6 @@ def get(q):
         for j in range(len(search_result['hits']['hits'])):
             context.append(search_result['hits']['hits'][j]['_source'])
     return context
-    # search_result = client.search(engine_name, query, {'sort': {"sense_no": "asc"}})
-    # if len(search_result) == 0:
-    #     return {}
-    # page = search_result['meta']['page']['total_pages']
-    # context = []
-    # for i in range(1, page + 1):
-    #     search_result = client.search(engine_name, query, {
-    #         'sort': {"sense_no": "asc"},
-    #         'page': {'current': i}
-    #     })
-    #     for j in range(len(search_result['results'])):
-    #         context.append(search_result['results'][j])
-    # return context
 
 
 def search(request):
@@ -66,10 +42,12 @@ def search(request):
         query = request.GET.get('kw')
         page = request.GET.get('page')  # 페이지
         context = get(query)
-        print(context)
+        if len(context) == 0:
+            return render(request, 'dict//searched.html')
         paginator = Paginator(context, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
-        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query})
+        records = Recipe.object.all().order_by('-id')
+        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query, 'records': records})
     else:
         return render(request, 'dict//searched.html')
 
@@ -99,8 +77,23 @@ def index(request, pk):
             'pk': pk
         }
     }
+
     search_result = es.search(index="word", query=query)
     search_result = search_result['hits']['hits'][0]['_source']
+
+    # Recipe.object.all().delete()
+    try:
+        Recipe.object.filter(primary_key=pk).delete()
+    except:
+        print("예외")
+
+    q = Recipe(
+        word=search_result['word'],
+        sense_no=search_result['sense_no'],
+        primary_key=pk
+    )
+    q.save()
+    records = Recipe.object.all().order_by('-id')
     example = get_result(search_result, "example", ',  ')
     if example is not None:
         last = example[len(example) - 1]
@@ -145,7 +138,8 @@ def index(request, pk):
     language_dict = {}
     if original_language is not None:
         language_dict = {name: value for name, value in zip(original_language, language_type)}
+
     return render(request, 'dict//item.html', {'result': search_result, 'example': example,
                                                'conjugation': conju_dic, 'abbreviation': abbre_dic,
                                                'relation': relation_dic, 'proverb': proverb_dict,
-                                               'language': language_dict})
+                                               'language': language_dict, 'records': records})

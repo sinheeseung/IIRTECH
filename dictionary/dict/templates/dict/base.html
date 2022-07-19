@@ -6,21 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    <header>
+<div style="display:flex; align-items:center">
+    <header style="margin-right:20px; margin-left: 20px">
          <body link = "0000ff" vlink="0000ff">
             <a href = "{% url 'dict:main' %}">
-                <h1 >Search</h1>
+                <h1 >국어사전</h1>
             </a>
         </body>
-
     </header>
-    <form class="form-inline" action="{% url 'dict:search'%}" method="get">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="kw">
-        <button class="btn btn-outline-success my5 my-sm-0" type="submit"> Search</button>
+    <form class="form-inline" action="{% url 'dict:search'%}" method="get" >
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" name="kw" style="width: 200px; height:35px; border-radius:10px">
+        <button class="btn btn-outline-success my5 my-sm-0" type="submit" style="height:35px; border-radius:10px" > Search</button>
     </form>
+</div>
     <div class = 'container'>
         {% block content %}
         {% endblock %}
-        </div>
+    </div>
 </body>
 </html>

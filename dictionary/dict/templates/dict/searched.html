@@ -1,59 +1,67 @@
 {% extends 'dict//base.html' %}
 
 {% block content %}
-<body>
+<div style="display:flex;">
+    <div class = 'container' style="margin-left: 20px; border: 1px solid red; width:70%">
+        {% if context %}
+            {% for word in context%}
+                <div class = 'container' style = 'display: flex; margin = 5'>
+                    <body link = "0000ff" vlink="0000ff">
+                        <a href = "{% url 'dict:item' word.pk %}" >
+                            <h1 style = 'margin-right: 10px; margin-bottom:5px'>{{ word.word }}</h1>
+                        </a>
+                    </body>
 
-<div class = 'container'>
-    {% if context %}
-        {% for word in context%}
-            <div class = 'container' style = 'display: flex; margin = 5'>
-                <body link = "0000ff" vlink="0000ff">
-                    <a href = "{% url 'dict:item' word.pk %}">
-                        <h1 style = 'margin-right: 10px'>{{ word.word }}</h1>
-                    </a>
-                </body>
-
-                <div class = 'container'>
-                    <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no }}</h5>
-                    {% if word.pronunciation != None %}
-                        <h3 style = 'margin: 0'>{{ word.pronunciation}}</h3>
-                    {% endif %}
+                    <div class = 'container'>
+                        <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no }}</h5>
+                        {% if word.pronunciation != None %}
+                            <h3 style = 'margin: 0'>{{ word.pronunciation}}</h3>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-            <h2 style = 'margin: 0'>{{ word.definition}}</h2>
-        {% endfor %}
-    {% else %}<!-- 검색 결과가 없는 경우-->
-        <b><i> Not Found</i></b>
-{% endif %}
-</div>
-</body>
-    <!-- 페이징처리 시작 -->
-    <div>
-        <!-- 이전페이지 -->
-        {% if context.has_previous %}
-            <a class="page-link" href="?kw={{kw}}&page={{ context.previous_page_number }}">이전</a>
-        {% else %}
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-        {% endif %}
+                <h2 style = 'margin: 0'>{{ word.definition}}</h2>
+            {% endfor %}
+        {% else %}<!-- 검색 결과가 없는 경우-->
+            <b><i> Not Found</i></b>
+    {% endif %}
 
-        <!-- 페이지리스트 -->
-        {% for page_number in context.paginator.page_range %}
-        {% if page_number >= context.number|add:-5 and page_number <= context.number|add:5 %}
-        {% if page_number == context.number %}
-            <a class="page-link">{{ page_number }}</a>
-        {% else %}
-            <a class="page-link" href="?kw={{kw}}&page={{ page_number }}">{{ page_number }}</a>
-        {% endif %}
-        {% endif %}
-        {% endfor %}
+        <!-- 페이징처리 시작 -->
+        <div style="text-align: center; margin-top:10px">
+            <!-- 이전페이지 -->
+            {% if context.has_previous %}
+                <a class="page-link" href="?kw={{kw}}&page={{ context.previous_page_number }}">이전</a>
+            {% else %}
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            {% endif %}
 
-        <!-- 다음페이지 -->
-        {% if context.has_next %}
-            <a class="page-link" href="?kw={{kw}}&page={{ context.next_page_number }}">다음</a>
-        {% else %}
-            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-        {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in context.paginator.page_range %}
+            {% if page_number >= context.number|add:-5 and page_number <= context.number|add:5 %}
+            {% if page_number == context.number %}
+                <a class="page-link">{{ page_number }}</a>
+            {% else %}
+                <a class="page-link" href="?kw={{kw}}&page={{ page_number }}">{{ page_number }}</a>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+
+            <!-- 다음페이지 -->
+            {% if context.has_next %}
+                <a class="page-link" href="?kw={{kw}}&page={{ context.next_page_number }}">다음</a>
+            {% else %}
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            {% endif %}
+        </div>
+        <!-- 페이징처리 끝 -->
     </div>
-    <!-- 페이징처리 끝 -->
-
+        <!-- 검색한 단어 -->
+       <header style="text-align:center; border: 1px solid black;">
+           <h4>내가 찾은 단어</h4>
+           <nav>
+               <span>Menu1</span>
+               <span>Menu2</span>
+               <span>Menu3</span>
+           </nav>
+       </header>
+</div>
 {% endblock %}
