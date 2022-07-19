@@ -73,7 +73,7 @@ def get_pro_result(result, string):
 
 def delete(request, pk):
     Recipe.object.get(primary_key=pk).delete()
-
+    return redirect('/')
 
 def index(request, pk):
     query = {
