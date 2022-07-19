@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from elasticsearch import Elasticsearch
 from django.core.paginator import Paginator
 from .models import Recipe
@@ -69,6 +69,10 @@ def get_pro_result(result, string):
     for i in range(len(value) - 1):
         value[i] = value[i] + "]"
     return value
+
+
+def delete(request, pk):
+    Recipe.object.get(primary_key=pk).delete()
 
 
 def index(request, pk):
