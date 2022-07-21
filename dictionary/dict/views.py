@@ -38,6 +38,10 @@ def get(q):
 
 
 def search(request):
+    print("*********************************")
+    if 'delete' in request.get_full_path():
+        url = search_delete(request)
+        return redirect(url)
     if 'kw' in request.GET:
         query = request.GET.get('kw')
         page = request.GET.get('page')  # 페이지
@@ -47,7 +51,8 @@ def search(request):
         paginator = Paginator(context, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         records = Recipe.object.all().order_by('-id')
-        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query, 'records': records})
+        q = '?kw='+query
+        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query, 'records': records, 'q':q})
     else:
         return render(request, 'dict//searched.html')
 
@@ -71,9 +76,19 @@ def get_pro_result(result, string):
     return value
 
 
-def delete(request, pk):
-    Recipe.object.get(primary_key=pk).delete()
-    return redirect('/')
+def item_delete(request, pk, dk):
+    Recipe.object.get(primary_key=dk).delete()
+    return redirect('../../')
+
+
+def search_delete(request):
+    idx_pk = request.get_full_path().rindex('/')
+    dk = request.get_full_path()[idx_pk+1:]
+    idx_de = request.get_full_path().rindex('delete')
+    url = request.get_full_path()[:idx_de-1]
+    Recipe.object.get(primary_key=dk).delete()
+    return url
+
 
 def index(request, pk):
     query = {
@@ -81,7 +96,6 @@ def index(request, pk):
             'pk': pk
         }
     }
-
     search_result = es.search(index="word", query=query)
     search_result = search_result['hits']['hits'][0]['_source']
 

@@ -183,7 +183,8 @@
            <nav>
                <li  style = 'margin:5px; text-align:left'>
                     <a href = "{% url 'dict:item' record.primary_key %}" style="text-decoration:none; color:black"  >{{record.word}}{{record.sense_no}}</a>
-                    <a href = "/item/{{record.primary_key}}/delete/">x</a>
+                    <a href = "/item/{{result.pk}}/delete/{{record.primary_key}}/">x</a>
+
                </li>
            </nav>
            {% endfor %}

@@ -54,14 +54,17 @@
         </div>
         <!-- 페이징처리 끝 -->
     </div>
-        <!-- 검색한 단어 -->
+    <!-- 검색한 단어 -->
        <header style="text-align:center; border: 1px solid black;">
            <h4>내가 찾은 단어</h4>
+           {% for record in records %}
            <nav>
-               <span>Menu1</span>
-               <span>Menu2</span>
-               <span>Menu3</span>
+               <li  style = 'margin:5px; text-align:left'>
+                    <a href = "{% url 'dict:item' record.primary_key %}" style="text-decoration:none; color:black"  >{{record.word}}{{record.sense_no}}</a>
+                   <a href = "/searched/?kw={{kw}}/delete/{{record.primary_key}}">x</a>
+               </li>
            </nav>
+           {% endfor %}
        </header>
 </div>
 {% endblock %}
