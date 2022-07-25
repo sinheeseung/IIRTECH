@@ -38,7 +38,6 @@ def get(q):
 
 
 def search(request):
-    print("*********************************")
     if 'delete' in request.get_full_path():
         url = search_delete(request)
         return redirect(url)
@@ -51,8 +50,7 @@ def search(request):
         paginator = Paginator(context, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         records = Recipe.object.all().order_by('-id')
-        q = '?kw='+query
-        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query, 'records': records, 'q':q})
+        return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query, 'records': records})
     else:
         return render(request, 'dict//searched.html')
 
@@ -99,7 +97,6 @@ def index(request, pk):
     search_result = es.search(index="word", query=query)
     search_result = search_result['hits']['hits'][0]['_source']
 
-    # Recipe.object.all().delete()
     try:
         Recipe.object.filter(primary_key=pk).delete()
     except:
@@ -111,6 +108,7 @@ def index(request, pk):
         primary_key=pk
     )
     q.save()
+
     records = Recipe.object.all().order_by('-id')
     example = get_result(search_result, "example", ',  ')
     if example is not None:
