@@ -8,27 +8,27 @@
 {% extends "dict//base.html" %}
 {% block content %}
 <div style="display:flex">
-<div class="mt30 accessArea" style="border: 1px solid red; width:70%; margin-left:20px" >
+<div class="mt30 accessArea" style="border: 1px solid red; width:70%; margin-left:10px" >
     <!-- 검색결과 목록 start -->
     <div class="search_result" style="border: 1px solid blue;">
-        <!-- 표제어 -->
-
-        <!-- 품사/문형 -->
-        <div class = 'container' style = 'display: flex; border: 1px solid green;' >
-                <body link = "0000ff" vlink="0000ff">
-                        <h1 style = 'margin:3px; margin-right:10px'>{{result.word}}</h1>
-                </body>
-
-                <div class = 'container'>
+        <div class = 'col' style = 'display: flex; border: 1px solid green;' >
+            <div class = "row-md-1">
+                <h1 style = 'margin:3px; margin-right:10px'>{{result.word}}</h1>
+            </div>
+            <div class = 'row-md-1'>
+                <div class="col">
+                    <div class = 'row-md-1'>
                     <h4 style = 'margin-top:3px;margin-bottom: 0px;'>「{{result.word_type}}」</h4>
-                    <div style='display: flex'>
-                        {% for key,value in language.items %}
-                            {% if key != '/' %}
-                                <p style="margin:0">{{key}}({{value}})  </p>
-                            {% endif %}
-                        {% endfor %}
                     </div>
+                    <div class = 'row-md-1' style='display: flex'>
+                        {% for key,value in language.items %}
+                        {% if key != '/' %}
+                            <p style="margin:0">{{key}}({{value}})  </p>
+                        {% endif %}
+                        {% endfor %}
                 </div>
+                </div>
+            </div>
         </div>
 
 
@@ -158,26 +158,28 @@
     <!-- 관용구, 속담 -->
     {% if proverb  %}
     <div class="search_view_list">
-        <h4 class="tit" style="margin-bottom: 0">관용구·속담(<strong>{{proverb|length}}</strong>)</h4>
-        <div class="search_proverb ">
-            {% for key, value in proverb.items %}
-                {% for key2, value2 in value.items %}
-                    <dl style="margin-top: 5px">
-                        <dt>
-                            <span class="proverb_type01 mr15">{{value2}}  </span><strong>  {{key}}</strong>
-                        </dt>
-                        <dd>{{key2}}
-                            <ul class="dot"></ul>
-                        </dd>
-                    </dl>
+       <div class="search_proverb ">
+            <details>
+                <summary style="font-size:120%">관용구·속담(<strong>{{proverb|length}}</strong>)</summary>
+                {% for key, value in proverb.items %}
+                    {% for key2, value2 in value.items %}
+                        <dl style="margin-top: 5px">
+                            <dt>
+                                <span class="proverb_type01 mr15">{{value2}}  </span><strong>  {{key}}</strong>
+                            </dt>
+                            <dd>{{key2}}
+                                <ul class="dot"></ul>
+                            </dd>
+                        </dl>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
+            </details>
         </div>
     </div>
     {% endif %}
 </div>
     <!-- 검색한 단어 -->
-       <header style="text-align:center; border: 1px solid black;">
+       <header style="text-align:center; border: 1px solid black; ">
            <h4>내가 찾은 단어</h4>
            {% for record in records %}
            <nav>

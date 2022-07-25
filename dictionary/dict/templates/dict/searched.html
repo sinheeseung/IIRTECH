@@ -1,22 +1,25 @@
 {% extends 'dict//base.html' %}
 
 {% block content %}
-<div style="display:flex;">
-    <div class = 'container' style="margin-left: 20px; border: 1px solid red; width:70%">
+<div style="display:flex; margin:0">
+    <div class = 'container' style="margin-left:auto;border: 1px solid red; width:70%">
         {% if context %}
             {% for word in context%}
-                <div class = 'container' style = 'display: flex; margin = 5'>
-                    <body link = "0000ff" vlink="0000ff">
-                        <a href = "{% url 'dict:item' word.pk %}" >
-                            <h1 style = 'margin-right: 10px; margin-bottom:5px'>{{ word.word }}</h1>
-                        </a>
-                    </body>
-
-                    <div class = 'container'>
-                        <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no }}</h5>
-                        {% if word.pronunciation != None %}
-                            <h3 style = 'margin: 0'>{{ word.pronunciation}}</h3>
-                        {% endif %}
+                <div class = 'col' style = 'display: flex; margin = 0'>
+                    <div class = 'row-md-1'>
+                        <h1 style = 'margin-right: 10px;'><a href = "{% url 'dict:item' word.pk %}" style="vertical-align:middle; ">{{ word.word }}</a></h1>
+                    </div>
+                    <div class = 'row-md-1'>
+                        <div class = "col">
+                            <div class = "row-md-1">
+                                <h5 style = 'margin-top: 5; margin-bottom: 0'>{{ word.sense_no }}</h5>
+                            </div>
+                            <div class = "row-md-1">
+                                {% if word.pronunciation != None %}
+                                <h3 style = 'margin-bottom: 5'>{{ word.pronunciation}}</h3>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <h2 style = 'margin: 0'>{{ word.definition}}</h2>
@@ -26,32 +29,32 @@
     {% endif %}
 
         <!-- 페이징처리 시작 -->
-        <div style="text-align: center; margin-top:10px">
+        <ul class = "pagination" style="justify-content:center; margin-top:15px">
             <!-- 이전페이지 -->
             {% if context.has_previous %}
-                <a class="page-link" href="?kw={{kw}}&page={{ context.previous_page_number }}">이전</a>
+                <li><a class="page-link" href="?kw={{kw}}&page={{ context.previous_page_number }}">이전</a></li>
             {% else %}
-                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+                <li><a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a></li>
             {% endif %}
 
             <!-- 페이지리스트 -->
             {% for page_number in context.paginator.page_range %}
             {% if page_number >= context.number|add:-5 and page_number <= context.number|add:5 %}
             {% if page_number == context.number %}
-                <a class="page-link">{{ page_number }}</a>
+                <li><a class="page-link">{{ page_number }}</a></li>
             {% else %}
-                <a class="page-link" href="?kw={{kw}}&page={{ page_number }}">{{ page_number }}</a>
+                <li><a class="page-link" href="?kw={{kw}}&page={{ page_number }}">{{ page_number }}</a></li>
             {% endif %}
             {% endif %}
             {% endfor %}
 
             <!-- 다음페이지 -->
             {% if context.has_next %}
-                <a class="page-link" href="?kw={{kw}}&page={{ context.next_page_number }}">다음</a>
+                <li><a class="page-link" href="?kw={{kw}}&page={{ context.next_page_number }}">다음</a></li>
             {% else %}
-                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                <li><a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a></li>
             {% endif %}
-        </div>
+        </ul>
         <!-- 페이징처리 끝 -->
     </div>
     <!-- 검색한 단어 -->
@@ -60,7 +63,7 @@
            {% for record in records %}
            <nav>
                <li  style = 'margin:5px; text-align:left'>
-                    <a href = "{% url 'dict:item' record.primary_key %}" style="text-decoration:none; color:black"  >{{record.word}}{{record.sense_no}}</a>
+                   <a href = "{% url 'dict:item' record.primary_key %}" style="text-decoration:none; color:black"  >{{record.word}}{{record.sense_no}}</a>
                    <a href = "/searched/?kw={{kw}}/delete/{{record.primary_key}}">x</a>
                </li>
            </nav>
