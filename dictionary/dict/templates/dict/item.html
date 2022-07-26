@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Document</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
 {% extends "dict//base.html" %}
 {% block content %}
 <div style="display:flex">
-<div class="mt30 accessArea" style="border: 1px solid red; width:70%; margin-left:10px" >
+<div class="container" style="border: 1px solid red; width:70%;margin-auto;margin-right:0px;padding:0px" >
     <!-- 검색결과 목록 start -->
     <div class="search_result" style="border: 1px solid blue;">
         <div class = 'col' style = 'display: flex; border: 1px solid green;' >
@@ -23,7 +16,7 @@
                     <div class = 'row-md-1' style='display: flex'>
                         {% for key,value in language.items %}
                         {% if key != '/' %}
-                            <p style="margin:0">{{key}}({{value}})  </p>
+                            <p style="margin:auto;">{{key}}({{value}})  </p>
                         {% endif %}
                         {% endfor %}
                 </div>
@@ -32,50 +25,50 @@
         </div>
 
 
-        <div class = 'container' style = 'display: flex'>
+        <div class = 'container' style = 'display: flex; padding:0px'>
             <!-- 발음 -->
             {% if result.pronunciation != None %}
                 <div style = 'margin-right: 15px'>
-                    <dt>발음</dt>
-                    <dt><span class="search_sub">{{result.pronunciation}}</span></dt>
+                    <dt style="text-align:center">발음</dt>
+                    <dt style="text-align:center;font-weight : normal;">{{result.pronunciation}}</dt>
                 </div>
             {% endif %}
             <!-- 활용 -->
             <div style = 'margin-right: 15px'>
-                <dt>품사</dt>
-                <dt><span class="word_att_type1">「{{result.pos}}」 </span></dt>
+                <dt style="text-align:center">품사</dt>
+                <dt style="text-align:center;font-weight : normal;">「{{result.pos}}」</dt>
             </div>
 
             <div style = 'margin-right: 15px'>
-                <dt>범주</dt>
-                <dt><span class="word_att_type1">「{{result.type}}」 </span></dt>
+                <dt style="text-align:center">범주</dt>
+                <dt style="text-align:center;font-weight : normal;">「{{result.type}}」</dt>
             </div>
 
             {% if result.cat != None %}
                 <div style = 'margin-right: 15px'>
-                    <dt>전문 분야</dt>
-                    <dt><span class="word_att_type1">{{result.cat}}</span></dt>
+                    <dt style="text-align:center">전문 분야</dt>
+                    <dt style="text-align:center;font-weight : normal;">{{result.cat}}</dt>
                 </div>
             {% endif %}
 
             {% if result.translation != None %}
                 <div style = 'margin-right: 15px'>
-                    <dt>대역어</dt>
-                    <dt><span class="word_att_type1">{{result.translation}}({{result.translation_language}}) </span></dt>
+                    <dt style="text-align:center">대역어</dt>
+                    <dt style="text-align:center;font-weight : normal;">{{result.translation}}({{result.translation_language}})</dt>
                 </div>
             {% endif %}
 
             {% if result.origin != None %}
                 <div style = 'margin-right: 15px'>
-                    <dt>이형태</dt>
-                    <dt><span class="word_att_type1">{{result.origin}}</span></dt>
+                    <dt style="text-align:center">이형태</dt>
+                    <dt style="text-align:center;font-weight : normal;">{{result.origin}}</dt>
                 </div>
             {% endif %}
 
             {% if result.allomorph != None %}
                 <div style = 'margin-right: 15px'>
-                    <dt>어원</dt>
-                    <dt><span class="word_att_type1">{{result.allomorph}}</span></dt>
+                    <dt style="text-align:center">어원</dt>
+                    <dt style="text-align:center;font-weight : normal;">{{result.allomorph}}</dt>
                 </div>
             {% endif %}
         </div>
@@ -84,9 +77,9 @@
         <div class="search_view_list group mt30">
             <!-- 뜻풀이 -->
 
-            <dl class="cont_01">
+            <dl class="cont_01" style="margin-top:7px">
                 <dt>
-                    <span style="font-size: large" class="word_no mr5">「{{result.sense_no}}」 {{result.definition}}</span>
+                    <span style="font-weight : normal;">「{{result.sense_no}}」</span> <span style="font-size: large">{{result.definition}}</span>
                 </dt>
             </dl>
             <!-- 용례 -->
@@ -140,11 +133,13 @@
         <!-- 관련 어휘 -->
         {% if relation %}
         <div class="search_view_list group">
-            <h4 class="tit" style="margin-bottom: 0">관련 어휘</h4>
+            <h4 style="margin-bottom: 0"><strong>관련 어휘</strong></h4>
             <div class="search_meaning ">
                 {% for key, value in relation.items %}
-                    <dl style="margin: 0">
-                        <h5 style="margin: 0">{{key}}</h5>
+                    <dl style="margin: 0;margin-left:5px;margin-top:5px; display:flex">
+                        <div class = "col-md-1">
+                            <dt style="margin: 0">{{key}}</dt>
+                        </div>
                         <dd>{{value}}</dd>
                     </dl>
                 {% endfor %}
@@ -165,7 +160,7 @@
                     {% for key2, value2 in value.items %}
                         <dl style="margin-top: 5px">
                             <dt>
-                                <span class="proverb_type01 mr15">{{value2}}  </span><strong>  {{key}}</strong>
+                                <span class="btn btn-dark disabled btn-sm">{{value2}}  </span><strong>  {{key}}</strong>
                             </dt>
                             <dd>{{key2}}
                                 <ul class="dot"></ul>
@@ -178,6 +173,7 @@
     </div>
     {% endif %}
 </div>
+    <div style="position:sticky; top:80px;height: 100px;">
     <!-- 검색한 단어 -->
        <header style="text-align:center; border: 1px solid black; ">
            <h4>내가 찾은 단어</h4>
@@ -186,10 +182,10 @@
                <li  style = 'margin:5px; text-align:left'>
                     <a href = "{% url 'dict:item' record.primary_key %}" style="text-decoration:none; color:black"  >{{record.word}}{{record.sense_no}}</a>
                     <a href = "/item/{{result.pk}}/delete/{{record.primary_key}}/">x</a>
-
                </li>
            </nav>
            {% endfor %}
        </header>
+    </div>
 </div>
 {% endblock %}

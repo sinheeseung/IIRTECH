@@ -7,18 +7,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 </head>
 <body>
-<div style="display:flex; align-items:center">
+<div style="display:flex; width:90%">
+    <div style="display:flex; margin:auto">
     <header style="margin:20px;">
          <body link = "0000ff" vlink="0000ff">
             <a href = "{% url 'dict:main' %}">
-                <h1 >국어사전</h1>
+                <h1>국어사전</h1>
             </a>
         </body>
     </header>
-    <form class="form-inline" action="{% url 'dict:search'%}" method="get" style = 'display:flex' >
-        <input class="form-control" type="search" placeholder="Search" name="kw" style="width: 200px; height:35px; border-radius:10px">
+    <form class="form" action="{% url 'dict:search'%}" method="get" style = 'display:flex; margin:auto' >
+        <input class="form-control input-lg" type="search" placeholder="Search" name="kw" style="width: 200%; height:35px; border-radius:10px">
         <button class="btn btn-outline-info" type="submit" style="height:35px; border-radius:10px; margin-left:10px" > Search</button>
     </form>
+    </div>
 </div>
     <div class = 'container' style="margin-left:0px">
         {% block content %}
