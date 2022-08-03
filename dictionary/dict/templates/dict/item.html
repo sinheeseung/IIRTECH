@@ -1,147 +1,163 @@
 {% extends "dict//base.html" %}
 {% block content %}
 <div style="display:flex">
-<div class="container" style="border: 1px solid red; width:70%;margin-auto;margin-right:0px;padding:0px" >
+<div class="container" style="width:70%;margin-auto;margin-right:0px;padding:0px; border-right:solid 1px gray" >
     <!-- 검색결과 목록 start -->
-    <div class="search_result" style="border: 1px solid blue;">
-        <div class = 'col' style = 'display: flex; border: 1px solid green;' >
+    <div class="search_result">
+        <div class = 'col' style = 'display: flex; border-top:2px solid black; ' >
             <div class = "row-md-1">
                 <h1 style = 'margin:3px; margin-right:10px'>{{result.word}}</h1>
             </div>
             <div class = 'row-md-1'>
                 <div class="col">
                     <div class = 'row-md-1'>
-                    <h4 style = 'margin-top:3px;margin-bottom: 0px;'>「{{result.word_type}}」</h4>
+                        <h4 style = 'margin-top:3px;margin-bottom: 0px;'>「{{result.word_type}}」</h4>
                     </div>
                     <div class = 'row-md-1' style='display: flex'>
                         {% for key,value in language.items %}
                         {% if key != '/' %}
-                            <p style="margin:auto;">{{key}}({{value}})  </p>
+                        <p style="margin:auto;">{{key}}({{value}})  </p>
                         {% endif %}
                         {% endfor %}
-                </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-
+        <hr style="margin:5px">
         <div class = 'container' style = 'display: flex; padding:0px'>
             <!-- 발음 -->
             {% if result.pronunciation != None %}
-                <div style = 'margin-right: 15px'>
-                    <dt style="text-align:center">발음</dt>
-                    <dt style="text-align:center;font-weight : normal;">{{result.pronunciation}}</dt>
-                </div>
+            <div style = 'margin-right: 15px'>
+                <dt style="text-align:center">발음</dt>
+                <dt style="text-align:center;font-weight : normal;">{{result.pronunciation}}</dt>
+            </div>
             {% endif %}
-            <!-- 활용 -->
+            <!-- 품사 -->
             <div style = 'margin-right: 15px'>
                 <dt style="text-align:center">품사</dt>
                 <dt style="text-align:center;font-weight : normal;">「{{result.pos}}」</dt>
             </div>
-
+            <!-- 범주 -->
             <div style = 'margin-right: 15px'>
                 <dt style="text-align:center">범주</dt>
                 <dt style="text-align:center;font-weight : normal;">「{{result.type}}」</dt>
             </div>
-
+            <!-- 전문 분야 -->
             {% if result.cat != None %}
-                <div style = 'margin-right: 15px'>
-                    <dt style="text-align:center">전문 분야</dt>
-                    <dt style="text-align:center;font-weight : normal;">{{result.cat}}</dt>
-                </div>
+            <div style = 'margin-right: 15px'>
+                <dt style="text-align:center">전문 분야</dt>
+                <dt style="text-align:center;font-weight : normal;">{{result.cat}}</dt>
+            </div>
             {% endif %}
-
+            <!-- 대역어 -->
             {% if result.translation != None %}
-                <div style = 'margin-right: 15px'>
-                    <dt style="text-align:center">대역어</dt>
-                    <dt style="text-align:center;font-weight : normal;">{{result.translation}}({{result.translation_language}})</dt>
-                </div>
+            <div style = 'margin-right: 15px'>
+                <dt style="text-align:center">대역어</dt>
+                <dt style="text-align:center;font-weight : normal;">{{result.translation}}({{result.translation_language}})</dt>
+            </div>
             {% endif %}
-
+            <!-- 이형태 -->
             {% if result.origin != None %}
-                <div style = 'margin-right: 15px'>
-                    <dt style="text-align:center">이형태</dt>
-                    <dt style="text-align:center;font-weight : normal;">{{result.origin}}</dt>
-                </div>
+            <div style = 'margin-right: 15px'>
+                <dt style="text-align:center">이형태</dt>
+                <dt style="text-align:center;font-weight : normal;">{{result.origin}}</dt>
+            </div>
             {% endif %}
-
+            <!-- 어원 -->
             {% if result.allomorph != None %}
-                <div style = 'margin-right: 15px'>
-                    <dt style="text-align:center">어원</dt>
-                    <dt style="text-align:center;font-weight : normal;">{{result.allomorph}}</dt>
-                </div>
+            <div style = 'margin-right: 15px'>
+                <dt style="text-align:center">어원</dt>
+                <dt style="text-align:center;font-weight : normal;">{{result.allomorph}}</dt>
+            </div>
             {% endif %}
         </div>
-
+        <hr style="margin:5px">
         <!-- 기본목록 start -->
         <div class="search_view_list group mt30">
             <!-- 뜻풀이 -->
-
-            <dl class="cont_01" style="margin-top:7px">
-                <dt>
-                    <span style="font-weight : normal;">「{{result.sense_no}}」</span> <span style="font-size: large">{{result.definition}}</span>
-                </dt>
-            </dl>
+            <span style= "color:#B0ADAD">「{{result.sense_no}}」</span> <span>{{result.definition}}</span>
             <!-- 용례 -->
+
             {% if example %}
-                <dl class="cont_01 mt20">
-                    <!-- 용례 - 기본 -->
+            <hr style="margin:5px;">
+            <!-- 용례 - 기본 -->
+            {% for word in example %}
+            {% if forloop.counter0 < 5 %}
+            <ul style="marker-offset:2em; padding-left:25px; margin-bottom:3px">
+                <li>{{word}}</li>
+            </ul>
+            {% endif %}
+            {% endfor %}
+
+            {% if example|length >= 5 %}
+            <div class="collapse" id="collapseExample">
+                <div>
                     {% for word in example %}
-                        <li>
-                            {{word}}
-                        </li>
+                    {% if forloop.counter0 >= 5 %}
+                    <ul style="marker-offset:2em; padding-left:25px; margin-bottom:3px">
+                        <li>{{word}}</li>
+                    </ul>
+                    {% endif %}
                     {% endfor %}
-                </dl>
+                </div>
+            </div>
+            <div style="text-align:right">
+                <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample" style="text-align:right;">
+                    더보기
+                </a>
+            </div>
+            {% endif %}
             {% endif %}
 
             <!-- 활용 -->
             {% if conjugation %}
-                <dl class="cont_01 mt20">
-                    <dt><strong>활용</strong></dt>
-                    {% for key, value in conjugation.items %}
-                        <dd class="exmpleConts">
-                            {{key}} : {{value}}
-                        </dd>
-                    {% endfor %}
-                </dl>
+            <dl>
+                <dt style="margin-left:5px"><strong>활용</strong></dt>
+                {% for key, value in conjugation.items %}
+                <dd style="margin-left:10px; margin-bottom:4px">
+                    {{key}} : {{value}}
+                </dd>
+                {% endfor %}
+            </dl>
             {% endif %}
 
             <!-- 준말 -->
             {% if abbreviation %}
-                <dl class="cont_01 mt20">
-                    <dt><strong>준말</strong></dt>
-                    {% for key, value in abbreviation.items %}
-                        <dd class="exmpleConts">
-                            {{key}} : {{value}}
-                        </dd>
-                    {% endfor %}
-                </dl>
+            <dl>
+                <dt><strong>준말</strong></dt>
+                {% for key, value in abbreviation.items %}
+                <dd>
+                    {{key}} : {{value}}
+                </dd>
+                {% endfor %}
+            </dl>
             {% endif %}
 
             {% if result.grammar != None %}
-                <dl class="cont_01 mt20">
-                    <dt><strong>문법</strong></dt>
-                        <dd class="exmpleConts">
-                            {{result.grammar}}
-                        </dd>
-                </dl>
+            <dl>
+                <dt><strong>문법</strong></dt>
+                <dd>
+                    {{result.grammar}}
+                </dd>
+            </dl>
             {% endif %}
 
         </div>
         <!--// 기본목록 end -->
-
         <!-- 관련 어휘 -->
         {% if relation %}
+        <hr style="margin:5px">
         <div class="search_view_list group">
-            <h4 style="margin-bottom: 0"><strong>관련 어휘</strong></h4>
+            <h4 style="margin-bottom: 5"><strong>관련 어휘</strong></h4>
             <div class="search_meaning ">
                 {% for key, value in relation.items %}
-                    <dl style="margin: 0;margin-left:5px;margin-top:5px; display:flex">
-                        <div class = "col-md-1">
-                            <dt style="margin: 0">{{key}}</dt>
-                        </div>
-                        <dd>{{value}}</dd>
-                    </dl>
+                <dl style="margin-left:5px;margin-top:5px; display:flex">
+                    <div style="margin-right:3px;">
+                        <dt style="margin: 0; width: 70px">{{key}}</dt>
+                    </div>
+                    <dd>{{value}}</dd>
+                </dl>
                 {% endfor %}
             </div>
         </div>
@@ -152,30 +168,29 @@
 
     <!-- 관용구, 속담 -->
     {% if proverb  %}
+    <hr style="margin:5px">
     <div class="search_view_list">
-       <div class="search_proverb ">
-            <details>
+       <div class="search_proverb">
+            <details open>
                 <summary style="font-size:120%">관용구·속담(<strong>{{proverb|length}}</strong>)</summary>
                 {% for key, value in proverb.items %}
-                    {% for key2, value2 in value.items %}
-                        <dl style="margin-top: 5px">
-                            <dt>
-                                <span class="btn btn-dark disabled btn-sm">{{value2}}  </span><strong>  {{key}}</strong>
-                            </dt>
-                            <dd>{{key2}}
-                                <ul class="dot"></ul>
-                            </dd>
-                        </dl>
-                    {% endfor %}
+                {% for key2, value2 in value.items %}
+                <dl style="margin-top: 5px">
+                    <dt>
+                        <span class="btn btn-dark disabled btn-sm">{{value2}}  </span><strong>  {{key}}</strong>
+                    </dt>
+                    <dd>{{key2}}</dd>
+                </dl>
+                {% endfor %}
                 {% endfor %}
             </details>
         </div>
     </div>
     {% endif %}
 </div>
-    <div style="position:sticky; top:80px;height: 100px;">
+    <div style="position:sticky; top:80px;height: 100px;margin:auto; margin-left:0px; margin-top:0px">
     <!-- 검색한 단어 -->
-       <header style="text-align:center; border: 1px solid black; ">
+       <header style="text-align:center; border: 1px solid black; border-left:0pxs">
            <h4>내가 찾은 단어</h4>
            {% for record in records %}
            <nav>
@@ -188,4 +203,5 @@
        </header>
     </div>
 </div>
+
 {% endblock %}

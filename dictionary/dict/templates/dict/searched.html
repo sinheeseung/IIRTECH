@@ -2,7 +2,7 @@
 
 {% block content %}
 <div style="display:flex;">
-    <div class = 'container' style="margin:auto;margin-right:0px;border: 1px solid red; width:70%">
+    <div class = 'container' style="margin:auto;margin-right:0px;margin-top:0px;border: 1px solid red; width:70%">
         {% if context %}
             {% for word in context%}
                 <div class = 'col' style = 'display: flex; margin = 0; margin-top:5px'>
@@ -24,11 +24,8 @@
                 </div>
                 <h5 style = 'margin: 0'>{{ word.definition}}</h5>
             {% endfor %}
-        {% else %}<!-- 검색 결과가 없는 경우-->
-            <b><i> Not Found</i></b>
-    {% endif %}
-
-        <!-- 페이징처리 시작 -->
+        <div>
+            <!-- 페이징처리 시작 -->
         <ul class = "pagination" style="justify-content:center; margin-top:15px">
             <!-- 이전페이지 -->
             {% if context.has_previous %}
@@ -41,7 +38,7 @@
             {% for page_number in context.paginator.page_range %}
             {% if page_number >= context.number|add:-5 and page_number <= context.number|add:5 %}
             {% if page_number == context.number %}
-                <li><a class="page-link">{{ page_number }}</a></li>
+                <li class="active"><a class="page-link">{{ page_number }}</a></li>
             {% else %}
                 <li><a class="page-link" href="?kw={{kw}}&page={{ page_number }}">{{ page_number }}</a></li>
             {% endif %}
@@ -56,8 +53,14 @@
             {% endif %}
         </ul>
         <!-- 페이징처리 끝 -->
+        </div>
+        {% else %}<!-- 검색 결과가 없는 경우-->
+        <div style="margin:0px">
+            <b><i>'{{kw}}'은(는) 등록되어 있지 않습니다.</i></b>
+        </div>
+        {% endif %}
     </div>
-    <div style="position:sticky; top:80px;height: 100px;">
+    <div style="position:sticky; top:80px;height: 100px;margin:auto; margin-left:0px; margin-top:0px">
     <!-- 검색한 단어 -->
        <header style="text-align:center; border: 1px solid black;">
            <h4>내가 찾은 단어</h4>

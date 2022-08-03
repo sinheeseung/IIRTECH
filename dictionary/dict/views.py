@@ -45,11 +45,11 @@ def search(request):
         query = request.GET.get('kw')
         page = request.GET.get('page')  # 페이지
         context = get(query)
+        records = Recipe.object.all().order_by('-id')
         if len(context) == 0:
-            return render(request, 'dict//searched.html')
+            return render(request, 'dict//searched.html', {'kw': query, 'records': records})
         paginator = Paginator(context, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
-        records = Recipe.object.all().order_by('-id')
         return render(request, 'dict//searched.html', {'context': page_obj, 'kw': query, 'records': records})
     else:
         return render(request, 'dict//searched.html')
@@ -81,9 +81,9 @@ def item_delete(request, pk, dk):
 
 def search_delete(request):
     idx_pk = request.get_full_path().rindex('/')
-    dk = request.get_full_path()[idx_pk+1:]
+    dk = request.get_full_path()[idx_pk + 1:]
     idx_de = request.get_full_path().rindex('delete')
-    url = request.get_full_path()[:idx_de-1]
+    url = request.get_full_path()[:idx_de - 1]
     Recipe.object.get(primary_key=dk).delete()
     return url
 
